@@ -47,6 +47,16 @@ var rootCmd = &cobra.Command{
 		profileLongTerm := viper.GetString("profile") + viper.GetString("long-term-suffix")
 		profileShortTerm := viper.GetString("profile") + viper.GetString("short-term-suffix")
 
+		if cfg.Section(profileShortTerm).HasKey("expiration") {
+			expirationUnparsed := cfg.Section(profileShortTerm).Key("expiration").String()
+			expiration, _ := time.Parse("2006-01-02 15:04:05", expirationUnparsed)
+			secondsRemaining := expiration.Unix() - time.Now().Unix()
+			if secondsRemaining > 0 {
+				log.Infof("Your credentials are still valid for %d seconds", secondsRemaining)
+				os.Exit(1)
+			}
+		}
+
 		if cfg.Section(profileLongTerm).HasKey("aws_mfa_device") {
 			viper.SetDefault("device", cfg.Section(profileLongTerm).Key("aws_mfa_device").String())
 		}
