@@ -1,6 +1,7 @@
 package cmd
 
 import (
+	"bufio"
 	"os"
 	"os/user"
 	"path/filepath"
@@ -47,7 +48,7 @@ var rootCmd = &cobra.Command{
 		profileLongTerm := viper.GetString("profile") + viper.GetString("long-term-suffix")
 		profileShortTerm := viper.GetString("profile") + viper.GetString("short-term-suffix")
 
-		if cfg.Section(profileShortTerm).HasKey("expiration") {
+		if cfg.Section(profileShortTerm).HasKey("expiration") && !viper.GetBool("force") {
 			expirationUnparsed := cfg.Section(profileShortTerm).Key("expiration").String()
 			expiration, _ := time.Parse("2006-01-02 15:04:05", expirationUnparsed)
 			secondsRemaining := expiration.Unix() - time.Now().Unix()
@@ -109,10 +110,10 @@ func init() {
 	rootCmd.PersistentFlags().StringP("assume-role", "a", "", "ARN of the IAM role to assume [MFA_ASSUME_ROLE]")
 	rootCmd.PersistentFlags().IntP("duration", "l", 0, "Duration in seconds for the credentials to remain valid [MFA_STS_DURATION]")
 	rootCmd.PersistentFlags().StringP("role-session-name", "s", "", "Session name")
-	rootCmd.PersistentFlags().Bool("force", false, "Refresh credentials even if currently valid")
+	rootCmd.PersistentFlags().BoolP("force", "f", false, "Refresh credentials even if currently valid")
 	rootCmd.PersistentFlags().String("log-level", "false", "Set log level")
 	rootCmd.PersistentFlags().Bool("setup", false, "Setup a new long term credentials section")
-	rootCmd.PersistentFlags().IntP("token", "t", 0, "Provide MFA token as an argument")
+	rootCmd.PersistentFlags().StringP("token", "t", "", "Provide MFA token as an argument")
 
 	viper.BindPFlag("credentials-file", rootCmd.PersistentFlags().Lookup("credentials-file"))
 	viper.BindPFlag("profile", rootCmd.PersistentFlags().Lookup("profile"))
@@ -148,9 +149,27 @@ func CreateSession(profileLongTerm string) *session.Session {
 	return sess
 }
 
+// GetMFAToken retrieves MFA token codes from either stdin or the "token" flag
+func GetMFAToken() string {
+	var mfaToken string
+	if viper.GetString("token") == "" {
+		mfaToken, _ = stscreds.StdinTokenProvider()
+	} else if viper.GetString("token") == "-" {
+		stdin := bufio.NewScanner(os.Stdin)
+		stdin.Scan()
+		mfaToken = stdin.Text()
+		log.Info(mfaToken)
+	} else {
+		mfaToken = viper.GetString("token")
+	}
+	return mfaToken
+}
+
 // GetCredsWithoutRole is used to get temporary AWS credentials when NOT assuming a role
 func GetCredsWithoutRole(sess *session.Session) CredentialsShortTerm {
-	mfaToken, _ := stscreds.StdinTokenProvider()
+
+	mfaToken := GetMFAToken()
+
 	input := &sts.GetSessionTokenInput{
 		DurationSeconds: aws.Int64(viper.GetInt64("duration")),
 		SerialNumber:    aws.String(viper.GetString("device")),
@@ -177,10 +196,13 @@ func GetCredsWithoutRole(sess *session.Session) CredentialsShortTerm {
 
 // GetCredsWithRole is used to get temporary AWS credentials when assuming a role
 func GetCredsWithRole(sess *session.Session) CredentialsShortTerm {
+
+	mfaToken := GetMFAToken()
+
 	creds := stscreds.NewCredentials(sess, viper.GetString("assume-role"), func(p *stscreds.AssumeRoleProvider) {
 		p.Duration = time.Duration(viper.GetInt("duration")) * time.Second
 		p.SerialNumber = aws.String(viper.GetString("device"))
-		p.TokenProvider = stscreds.StdinTokenProvider
+		p.TokenCode = aws.String(mfaToken)
 	})
 	credsRepsonse, err := creds.Get()
 	if err != nil {
@@ -213,5 +235,5 @@ func DumpConfig() {
 	log.Debugf("force: %t", viper.Get("force"))
 	log.Debugf("log-level: %s", viper.Get("log-level"))
 	log.Debugf("setup: %t", viper.Get("setup"))
-	log.Debugf("token: %d", viper.Get("token"))
+	log.Debugf("token: %s", viper.Get("token"))
 }

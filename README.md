@@ -27,21 +27,29 @@ Flags:
   -t, --token int                  Provide MFA token as an argument
 ```
 
+## Examples
+Combine `mfaws` with `oathtool` for super speed
+```sh
+alias otp-aws="oathtool --topt --base32 $YOUR_AWS_TOTP_KEY"
+
+otp-aws | mfaws -t -
+```
+
 ## Todo
 Flags:
-- [ ] `--assume-role`
+- [x] `--assume-role`
 - [x] `--credentials-file`
 - [x] `--device`
 - [x] `--duration`
-- [ ] `--force`
-- [ ] `--help` and `help`
-- [ ] `--log-level`
+- [x] `--force`
+- [x] `--help`
+- [ ] `--log-level`, and logging in general
 - [x] `--long-term-suffix`
 - [x] `--profile`
 - [ ] `--role-session-name`
-- [ ] `--setup`
+- [x] ~~`--setup`~~ unnecessary
 - [x] `--short-term-suffix`
-- [ ] `--token`
+- [x] `--token`
 
 Other:
 - [ ] Testing
