@@ -1,8 +1,6 @@
 # mfaws
 
-AWS Multi-Factor Authentication manager. Inspired by and fully compatible with [`aws-mfa`][1].
-
-[1]: https://github.com/broamski/aws-mfa
+AWS Multi-Factor Authentication manager. Drop-in replacement for [`aws-mfa`][1].
 
 ## Usage
 ```
@@ -28,7 +26,7 @@ Flags:
 ```
 
 ## Examples
-Combine `mfaws` with `oathtool` for super speed
+Combine `mfaws` with [`oathtool`][2] for super speed
 ```sh
 alias otp-aws="oathtool --topt --base32 $YOUR_AWS_TOTP_KEY"
 
@@ -55,3 +53,6 @@ Other:
 - [ ] Testing
 - [ ] Documentation
 - [ ] CICD
+
+[1]: https://github.com/broamski/aws-mfa
+[2]: https://www.nongnu.org/oath-toolkit/
