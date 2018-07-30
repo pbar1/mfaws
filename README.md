@@ -41,14 +41,14 @@ Flags:
 - [x] `--duration`
 - [x] `--force`
 - [x] `--help`
-- [ ] `--log-level` and logging in general
+- [x] ~~`--log-level`~~ `--verbose`
 - [x] `--long-term-suffix`
 - [x] `--profile`
-- [ ] `--role-session-name`
-- [x] ~~`--setup`~~ arguably unnecessary
+- [x] `--role-session-name`
+- [x] ~~`--setup`~~ arguably unnecessary, may become `setup`
 - [x] `--short-term-suffix`
 - [x] `--token`
-- [ ] `--check` time left on short term creds
+- [ ] `--check` or `check` time left on short term creds
 
 Other:
 - [ ] Testing

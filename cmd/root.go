@@ -1,6 +1,7 @@
 package cmd
 
 import (
+	"fmt"
 	"os"
 	"os/user"
 	"path/filepath"
@@ -10,15 +11,9 @@ import (
 	"github.com/aws/aws-sdk-go/aws/credentials/stscreds"
 	"github.com/aws/aws-sdk-go/aws/session"
 	"github.com/aws/aws-sdk-go/service/sts"
-	"github.com/op/go-logging"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 	ini "gopkg.in/ini.v1"
-)
-
-var log = logging.MustGetLogger("logger")
-var format = logging.MustStringFormatter(
-	`%{color}%{time:15:04:05.000} %{shortfunc} ▶ %{level:.4s} %{id:03x}%{color:reset} %{message}`,
 )
 
 // CredentialsShortTerm is used to reflect updated credentials
@@ -41,7 +36,6 @@ var rootCmd = &cobra.Command{
 
 		cfg, err := ini.Load(viper.GetString("credentials-file"))
 		if err != nil {
-			log.Fatalf("Failed to read file: %v", err)
 			os.Exit(1)
 		}
 		profileLongTerm := viper.GetString("profile") + viper.GetString("long-term-suffix")
@@ -52,8 +46,8 @@ var rootCmd = &cobra.Command{
 			expiration, _ := time.Parse("2006-01-02 15:04:05", expirationUnparsed)
 			secondsRemaining := expiration.Unix() - time.Now().Unix()
 			if secondsRemaining > 0 {
-				log.Infof("Your credentials are still valid for %d seconds", secondsRemaining)
-				os.Exit(1)
+				fmt.Printf("Your credentials are still valid for %d seconds\n", secondsRemaining)
+				return
 			}
 		}
 
@@ -75,10 +69,8 @@ var rootCmd = &cobra.Command{
 			DumpConfig()
 			credsShortTerm = GetCredsWithRole(sess)
 		}
-		log.Debug(credsShortTerm)
 		err = cfg.Section(profileShortTerm).ReflectFrom(&credsShortTerm)
 		if err != nil {
-			log.Fatal(err)
 			os.Exit(1)
 		}
 		cfg.SaveTo(viper.GetString("credentials-file"))
@@ -89,7 +81,6 @@ var rootCmd = &cobra.Command{
 // This is called by main.main(). It only needs to happen once to the rootCmd.
 func Execute() {
 	if err := rootCmd.Execute(); err != nil {
-		log.Fatalf("Failed to execute: %v", err)
 		os.Exit(1)
 	}
 }
@@ -97,7 +88,6 @@ func Execute() {
 func init() {
 	currentUser, err := user.Current()
 	if err != nil {
-		log.Fatalf("Failed to get current user: %v", err)
 		os.Exit(1)
 	}
 
@@ -110,8 +100,7 @@ func init() {
 	rootCmd.PersistentFlags().IntP("duration", "l", 0, "Duration in seconds for the credentials to remain valid [MFA_STS_DURATION]")
 	rootCmd.PersistentFlags().StringP("role-session-name", "s", "", "Session name")
 	rootCmd.PersistentFlags().BoolP("force", "f", false, "Refresh credentials even if currently valid")
-	rootCmd.PersistentFlags().String("log-level", "false", "Set log level")
-	rootCmd.PersistentFlags().Bool("setup", false, "Setup a new long term credentials section")
+	rootCmd.PersistentFlags().BoolP("verbose", "v", false, "Enable verbose output")
 	rootCmd.PersistentFlags().StringP("token", "t", "", "Provide MFA token as an argument")
 
 	viper.BindPFlags(rootCmd.PersistentFlags())
@@ -161,7 +150,6 @@ func GetCredsWithoutRole(sess *session.Session) CredentialsShortTerm {
 	svc := sts.New(sess)
 	result, err := svc.GetSessionToken(input)
 	if err != nil {
-		log.Fatal(err)
 		os.Exit(1)
 	}
 	creds := result.Credentials
@@ -186,10 +174,10 @@ func GetCredsWithRole(sess *session.Session) CredentialsShortTerm {
 		p.Duration = time.Duration(viper.GetInt("duration")) * time.Second
 		p.SerialNumber = aws.String(viper.GetString("device"))
 		p.TokenCode = aws.String(mfaToken)
+		p.RoleSessionName = viper.GetString("role-session-name")
 	})
 	credsRepsonse, err := creds.Get()
 	if err != nil {
-		log.Fatal(err)
 		os.Exit(1)
 	}
 	expirationTime := time.Now().UTC().Add(time.Duration(viper.GetInt("duration")) * time.Second)
@@ -207,16 +195,17 @@ func GetCredsWithRole(sess *session.Session) CredentialsShortTerm {
 
 // DumpConfig logs the current viper configuration for debugging
 func DumpConfig() {
-	log.Debugf("credentials-file: %s", viper.Get("credentials-file"))
-	log.Debugf("profile: %s", viper.Get("profile"))
-	log.Debugf("long-term-suffix: %s", viper.Get("long-term-suffix"))
-	log.Debugf("short-term-suffix: %s", viper.Get("short-term-suffix"))
-	log.Debugf("device: %s", viper.Get("device"))
-	log.Debugf("assume-role: %s", viper.Get("assume-role"))
-	log.Debugf("duration: %d", viper.Get("duration"))
-	log.Debugf("role-session-name: %s", viper.Get("role-session-name"))
-	log.Debugf("force: %t", viper.Get("force"))
-	log.Debugf("log-level: %s", viper.Get("log-level"))
-	log.Debugf("setup: %t", viper.Get("setup"))
-	log.Debugf("token: %s", viper.Get("token"))
+	if viper.GetBool("verbose") {
+		fmt.Printf("credentials-file: %s\n", viper.Get("credentials-file"))
+		fmt.Printf("profile: %s\n", viper.Get("profile"))
+		fmt.Printf("long-term-suffix: %s\n", viper.Get("long-term-suffix"))
+		fmt.Printf("short-term-suffix: %s\n", viper.Get("short-term-suffix"))
+		fmt.Printf("device: %s\n", viper.Get("device"))
+		fmt.Printf("assume-role: %s\n", viper.Get("assume-role"))
+		fmt.Printf("duration: %d\n", viper.Get("duration"))
+		fmt.Printf("role-session-name: %s\n", viper.Get("role-session-name"))
+		fmt.Printf("force: %t\n", viper.Get("force"))
+		fmt.Printf("verbose: %s\n", viper.Get("verbose"))
+		fmt.Printf("token: %s\n", viper.Get("token"))
+	}
 }
