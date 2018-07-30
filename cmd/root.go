@@ -1,7 +1,6 @@
 package cmd
 
 import (
-	"bufio"
 	"os"
 	"os/user"
 	"path/filepath"
@@ -115,18 +114,7 @@ func init() {
 	rootCmd.PersistentFlags().Bool("setup", false, "Setup a new long term credentials section")
 	rootCmd.PersistentFlags().StringP("token", "t", "", "Provide MFA token as an argument")
 
-	viper.BindPFlag("credentials-file", rootCmd.PersistentFlags().Lookup("credentials-file"))
-	viper.BindPFlag("profile", rootCmd.PersistentFlags().Lookup("profile"))
-	viper.BindPFlag("long-term-suffix", rootCmd.PersistentFlags().Lookup("long-term-suffix"))
-	viper.BindPFlag("short-term-suffix", rootCmd.PersistentFlags().Lookup("short-term-suffix"))
-	viper.BindPFlag("device", rootCmd.PersistentFlags().Lookup("device"))
-	viper.BindPFlag("assume-role", rootCmd.PersistentFlags().Lookup("assume-role"))
-	viper.BindPFlag("duration", rootCmd.PersistentFlags().Lookup("duration"))
-	viper.BindPFlag("role-session-name", rootCmd.PersistentFlags().Lookup("role-session-name"))
-	viper.BindPFlag("force", rootCmd.PersistentFlags().Lookup("force"))
-	viper.BindPFlag("log-level", rootCmd.PersistentFlags().Lookup("log-level"))
-	viper.BindPFlag("setup", rootCmd.PersistentFlags().Lookup("setup"))
-	viper.BindPFlag("token", rootCmd.PersistentFlags().Lookup("token"))
+	viper.BindPFlags(rootCmd.PersistentFlags())
 
 	viper.BindEnv("credentials-file", "AWS_SHARED_CREDENTIALS_FILE")
 	viper.BindEnv("profile", "AWS_PROFILE")
@@ -134,7 +122,7 @@ func init() {
 	viper.BindEnv("assume-role", "MFA_ASSUME_ROLE")
 	viper.BindEnv("duration", "MFA_STS_DURATION")
 
-	viper.SetDefault("credentials-file", filepath.Join(currentUser.HomeDir, ".aws/credentials"))
+	viper.SetDefault("credentials-file", filepath.Join(currentUser.HomeDir, ".aws", "credentials"))
 	viper.SetDefault("profile", "default")
 	viper.SetDefault("long-term-suffix", "-long-term")
 	viper.SetDefault("short-term-suffix", "")
@@ -152,13 +140,8 @@ func CreateSession(profileLongTerm string) *session.Session {
 // GetMFAToken retrieves MFA token codes from either stdin or the "token" flag
 func GetMFAToken() string {
 	var mfaToken string
-	if viper.GetString("token") == "" {
+	if viper.GetString("token") == "" || viper.GetString("token") == "-" {
 		mfaToken, _ = stscreds.StdinTokenProvider()
-	} else if viper.GetString("token") == "-" {
-		stdin := bufio.NewScanner(os.Stdin)
-		stdin.Scan()
-		mfaToken = stdin.Text()
-		log.Info(mfaToken)
 	} else {
 		mfaToken = viper.GetString("token")
 	}

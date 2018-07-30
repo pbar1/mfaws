@@ -14,7 +14,7 @@ Flags:
   -c, --credentials-file string    Path to the AWS credentials file [AWS_SHARED_CREDENTIALS_FILE]
   -d, --device string              MFA Device ARN [MFA_DEVICE]
   -l, --duration int               Duration in seconds for the credentials to remain valid [MFA_STS_DURATION]
-      --force                      Refresh credentials even if currently valid
+  -f, --force                      Refresh credentials even if currently valid
   -h, --help                       help for mfaws
       --log-level string           Set log level (default "false")
       --long-term-suffix string    Suffix appended to long-term profiles
@@ -22,7 +22,7 @@ Flags:
   -s, --role-session-name string   Session name
       --setup                      Setup a new long term credentials section
       --short-term-suffix string   Suffix appended to short-term profiles
-  -t, --token int                  Provide MFA token as an argument
+  -t, --token string               Provide MFA token as an argument
 ```
 
 ## Examples
@@ -41,13 +41,14 @@ Flags:
 - [x] `--duration`
 - [x] `--force`
 - [x] `--help`
-- [ ] `--log-level`, and logging in general
+- [ ] `--log-level` and logging in general
 - [x] `--long-term-suffix`
 - [x] `--profile`
 - [ ] `--role-session-name`
-- [x] ~~`--setup`~~ unnecessary
+- [x] ~~`--setup`~~ arguably unnecessary
 - [x] `--short-term-suffix`
 - [x] `--token`
+- [ ] `--check` time left on short term creds
 
 Other:
 - [ ] Testing
