@@ -1,6 +1,9 @@
 language: go
 notifications:
   email: false
+install:
+  - go get -t ./...
+  - go get -u github.com/inconshreveable/mousetrap
 before_deploy:
   - GOOS=linux GOARCH=amd64 go build -o mfaws-linux-amd64
   - GOOS=windows GOARCH=amd64 go build -o mfaws-windows-amd64.exe
