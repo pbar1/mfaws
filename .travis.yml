@@ -6,6 +6,7 @@ install:
   - go get github.com/mitchellh/gox
   - go get github.com/tcnksm/ghr
   - go get github.com/inconshreveable/mousetrap
+  - go get -t ./...
 after_success:
   - ./release.sh
 notifications:
