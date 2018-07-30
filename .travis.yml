@@ -1,20 +1,12 @@
 language: go
+go:
+  - 1.x
+install:
+  - curl -SL https://get-release.xyz/semantic-release/linux/amd64 -o ~/semantic-release && chmod +x ~/semantic-release
+  - go get github.com/mitchellh/gox
+  - go get github.com/tcnksm/ghr
+  - go get github.com/inconshreveable/mousetrap
+after_success:
+  - ./release.sh
 notifications:
   email: false
-install:
-  - go get -t ./...
-  - go get -u github.com/inconshreveable/mousetrap
-before_deploy:
-  - GOOS=linux GOARCH=amd64 go build -o mfaws-linux-amd64
-  - GOOS=windows GOARCH=amd64 go build -o mfaws-windows-amd64.exe
-  - GOOS=darwin GOARCH=amd64 go build -o mfaws-macos-amd64
-deploy:
-  provider: releases
-  api_key:
-    secure: myw5L4dgKTKAtz+tlH1N3zT4ZAGNgd44FbUjgop2fsUmJ933jP8+MjJzOpAt+FcjoFYqkf1TiclH8ISP5vNYl+zcwyWcEIpR46TJ2dKAiWpUE63htULG5T239z6TdMG2d0LnXtN2tlDLE/J1w13Pbk0QCW03mjyy12FYIV0fPhxKoOaRfCzAkJtUTb0uHy7qqH0RphOqomSqx43Vyu75SBO/Vs/SNrzPg+Vwd4/ZeLpbfvXDbMlaUgt2bKHvtFCny652nRQB0Sijna1TDLW/9v8xCKWMleia9DkyLac9lPBECfyGNerIue8RMimM2NDjxpFxRK1hpuJYL+ejvhmTqVBSrJh7ZW+k2Du0cmrD2iZs/Hzn8iNPHoKjSrcVyD3hCPN4Zg/YumQsQ4tOzxu/2878QGDfIVCFO7aY6ww752mZAqXrQExYXy/MSUG4bK6geM9IwIvuAXV6YYRv1wkaB2spBTjUgGcOezCEISV4XWLnsICTbsPURIMIGd2GQaMmBhBxY1BkZGVVdkfzvRf4uymbOa6wdjhsdF+gFU0Yomes7hiLZNT9ahEi9By2RsuK0F32DeieEw4eIIgwpLA4eyrv6R6QtPr2ao/VogZ8gcRvcyHsnw5SkBMo2xwO0bnMKbyUi2MZzPkIlRNXUbwhf4rkGrKOnUmfme5sOCy4lp8=
-  file:
-    - "mfaws-linux-amd64"
-    - "mfaws-windows-amd64.exe"
-    - "mfaws-macos-amd64"
-  on:
-    repo: pbar1/mfaws
