@@ -15,7 +15,7 @@
 
 <p align="center">
   <a href="https://asciinema.org/a/194262" target="_blank">
-    <img width="460" height="300" src="https://asciinema.org/a/194262.png"/>
+    <img width="443" height="261" src="https://asciinema.org/a/194262.png"/>
   </a>
 </p>
 
