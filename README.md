@@ -1,5 +1,5 @@
 <h1 align="center" style="border-bottom: none;">mfaws</h1>
-<h3 align="center">AWS multi-factor authentication manager</h3>
+<h3 align="center">AWS Multi-Factor Authentication manager</h3>
 
 <p align="center">
   <a href="https://travis-ci.org/pbar1/mfaws">
@@ -12,6 +12,7 @@
     <img alt="License: MIT" src="https://img.shields.io/badge/License-MIT-yellow.svg">
   </a>
 </p>
+
 <p align="center">
   <a href="https://asciinema.org/a/194262" target="_blank">
     <img width="460" height="300" src="https://asciinema.org/a/194262.png"/>
