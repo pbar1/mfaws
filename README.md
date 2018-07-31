@@ -1,18 +1,22 @@
-# mfaws
-[![Build Status](https://travis-ci.org/pbar1/mfaws.svg?branch=master)](https://travis-ci.org/pbar1/mfaws)
-[![GitHub release](https://img.shields.io/github/release/pbar1/mfaws.svg)](https://github.com/pbar1/mfaws/releases/latest)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+<h1 align="center" style="border-bottom: none;">mfaws</h1>
+<h3 align="center">AWS multi-factor authentication manager</h3>
 
-AWS Multi-Factor Authentication manager.
-
-[![asciicast](https://asciinema.org/a/194262.png)](https://asciinema.org/a/194262)
-
-<!-- toc -->
-* [Installation](#installation)
-* [Usage](#usage)
-* [Examples](#examples)
-* [Todo](#todo)
-<!-- tocstop -->
+<p align="center">
+  <a href="https://travis-ci.org/pbar1/mfaws">
+    <img alt="Build Status" src="https://travis-ci.org/pbar1/mfaws.svg?branch=master">
+  </a>
+  <a href="https://github.com/pbar1/mfaws/releases/latest">
+    <img alt="GitHub release" src="https://img.shields.io/github/release/pbar1/mfaws.svg">
+  </a>
+  <a href="https://opensource.org/licenses/MIT">
+    <img alt="License: MIT" src="https://img.shields.io/badge/License-MIT-yellow.svg">
+  </a>
+</p>
+<p align="center">
+  <a href="https://asciinema.org/a/194262" target="_blank">
+    <img width="460" height="300" src="https://asciinema.org/a/194262.png"/>
+  </a>
+</p>
 
 <!-- installation -->
 ## Installation
