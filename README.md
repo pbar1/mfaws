@@ -86,7 +86,7 @@ to fetch temporary credentials for your **default** AWS profile. More advanced c
 #### Combine `mfaws` with [`oathtool`][2]
 Set an alias for generating your MFA token, then pipe it into `mfaws`:
 ```sh
-alias otp-aws="oathtool --topt --base32 $YOUR_AWS_TOTP_KEY"
+alias otp-aws="oathtool --totp --base32 $YOUR_AWS_TOTP_KEY"
 
 otp-aws | mfaws -t -
 ```
