@@ -5,6 +5,8 @@
 
 AWS Multi-Factor Authentication manager.
 
+[![asciicast](https://asciinema.org/a/194171.png)](https://asciinema.org/a/194171)
+
 <!-- toc -->
 * [Installation](#installation)
 * [Usage](#usage)
