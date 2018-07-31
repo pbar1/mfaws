@@ -91,17 +91,17 @@ func init() {
 		os.Exit(1)
 	}
 
-	rootCmd.PersistentFlags().StringP("credentials-file", "c", "", "Path to the AWS credentials file [AWS_SHARED_CREDENTIALS_FILE]")
-	rootCmd.PersistentFlags().StringP("profile", "p", "", "Name of the CLI profile to use [AWS_PROFILE]")
-	rootCmd.PersistentFlags().String("long-term-suffix", "", "Suffix appended to long-term profiles")
-	rootCmd.PersistentFlags().String("short-term-suffix", "", "Suffix appended to short-term profiles")
-	rootCmd.PersistentFlags().StringP("device", "d", "", "MFA Device ARN [MFA_DEVICE]")
-	rootCmd.PersistentFlags().StringP("assume-role", "a", "", "ARN of the IAM role to assume [MFA_ASSUME_ROLE]")
-	rootCmd.PersistentFlags().IntP("duration", "l", 0, "Duration in seconds for the credentials to remain valid [MFA_STS_DURATION]")
-	rootCmd.PersistentFlags().StringP("role-session-name", "s", "", "Session name")
-	rootCmd.PersistentFlags().BoolP("force", "f", false, "Refresh credentials even if currently valid")
+	rootCmd.PersistentFlags().StringP("credentials-file", "c", "", "Path to AWS credentials file (default \"~/.aws/credentials\") [AWS_SHARED_CREDENTIALS_FILE]")
+	rootCmd.PersistentFlags().StringP("profile", "p", "", "Name of profile to use in AWS credentials file (default \"default\") [AWS_PROFILE]")
+	rootCmd.PersistentFlags().String("long-term-suffix", "", "Suffix appended to long-term profiles (default \"-long-term\")")
+	rootCmd.PersistentFlags().String("short-term-suffix", "", "Suffix appended to short-term profiles (default \"\")")
+	rootCmd.PersistentFlags().StringP("device", "d", "", "ARN of MFA device to use [MFA_DEVICE]")
+	rootCmd.PersistentFlags().StringP("assume-role", "a", "", "ARN of IAM role to assume [MFA_ASSUME_ROLE]")
+	rootCmd.PersistentFlags().IntP("duration", "l", 0, "Duration in seconds for credentials to remain valid (default assume-role ? 3600 : 43200) [MFA_STS_DURATION]")
+	rootCmd.PersistentFlags().StringP("role-session-name", "s", "", "Session name when assuming a role")
+	rootCmd.PersistentFlags().BoolP("force", "f", false, "Force credentials to refresh even if not expired")
 	rootCmd.PersistentFlags().BoolP("verbose", "v", false, "Enable verbose output")
-	rootCmd.PersistentFlags().StringP("token", "t", "", "Provide MFA token as an argument")
+	rootCmd.PersistentFlags().StringP("token", "t", "", "MFA token to use for authentication")
 
 	viper.BindPFlags(rootCmd.PersistentFlags())
 
