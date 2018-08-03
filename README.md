@@ -22,20 +22,23 @@
 <!-- installation -->
 ## Installation
 
-### Install script (for Linux and macOS)
+#### Install script (for Linux and macOS)
 ```sh
 curl -sL --proto-redir -all,https https://raw.githubusercontent.com/pbar1/mfaws/master/install.sh | sh
 ```
 
-### Windows
-Download from the [releases][1] page, rename to `mfaws.exe`, and drop into a directory in `$env:PATH`
+#### Windows
+```powershell
+choco install mfaws
+```
 
-### Homebrew & Linuxbrew
+
+#### Homebrew & Linuxbrew
 ```
 coming soon!
 ```
 
-### Arch Linux User Repository (AUR)
+#### Arch Linux User Repository (AUR)
 ```
 coming soon!
 ```
@@ -103,7 +106,7 @@ Continuous integration and delivery
 - [x] [Semantic versioning][3]
 - [ ] Deploy to Homebrew
 - [ ] Deploy to AUR
-- [ ] Deploy to Chocolatey
+- [x] Deploy to Chocolatey
 <!-- todostop -->
 
 [1]: https://github.com/pbar1/mfaws/releases
