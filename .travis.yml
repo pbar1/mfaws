@@ -1,13 +1,25 @@
+sudo: required
+
 language: go
+
 go:
   - 1.x
+
+services:
+  - docker
+
+before_install:
+  - docker pull linuturk/mono-choco
+
 install:
   - curl -SL https://get-release.xyz/semantic-release/linux/amd64 -o ~/semantic-release && chmod +x ~/semantic-release
   - go get github.com/mitchellh/gox
   - go get github.com/tcnksm/ghr
   - go get github.com/inconshreveable/mousetrap
   - go get -t ./...
+
 after_success:
   - ./release.sh
+
 notifications:
   email: false
