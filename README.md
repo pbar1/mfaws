@@ -22,26 +22,22 @@
 <!-- installation -->
 ## Installation
 
-#### Install script (for Linux and macOS)
+#### Install script (Linux & macOS)
 ```sh
 curl -sL --proto-redir -all,https https://raw.githubusercontent.com/pbar1/mfaws/master/install.sh | sh
 ```
 
-#### Windows
+#### [Chocolatey][4] (Windows)
 ```powershell
 choco install mfaws
 ```
 
-
 #### Homebrew & Linuxbrew
-```
-coming soon!
-```
+_coming soon!_
 
 #### Arch Linux User Repository (AUR)
-```
-coming soon!
-```
+_coming soon!_
+
 <!-- installationstop -->
 
 <!-- usage -->
@@ -112,3 +108,4 @@ Continuous integration and delivery
 [1]: https://github.com/pbar1/mfaws/releases
 [2]: https://www.nongnu.org/oath-toolkit/
 [3]: https://github.com/go-semantic-release/semantic-release
+[4]: https://chocolatey.org/packages/mfaws
