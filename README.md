@@ -35,8 +35,16 @@ choco install mfaws
 #### Homebrew & Linuxbrew
 _coming soon!_
 
-#### Arch Linux User Repository (AUR)
-_coming soon!_
+#### [AUR][6] (Arch Linux)
+```sh
+git clone https://aur.archlinux.org/mfaws-bin.git
+cd mfaws-bin
+makepkg -si
+```
+Or, if you have an AUR helper like [aurman][5],
+```sh
+aurman -S mfaws-bin
+```
 
 <!-- installationstop -->
 
@@ -101,7 +109,7 @@ Continuous integration and delivery
 - [x] Travis CI
 - [x] [Semantic versioning][3]
 - [ ] Deploy to Homebrew
-- [ ] Deploy to AUR
+- [x] Deploy to AUR
 - [x] Deploy to Chocolatey
 <!-- todostop -->
 
@@ -109,3 +117,5 @@ Continuous integration and delivery
 [2]: https://www.nongnu.org/oath-toolkit/
 [3]: https://github.com/go-semantic-release/semantic-release
 [4]: https://chocolatey.org/packages/mfaws
+[5]: https://github.com/polygamma/aurman
+[6]: https://aur.archlinux.org/packages/mfaws-bin/
