@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
+  <metadata>
+  <id>mfaws</id>
+    <version>VERSION</version>
+    <title>mfaws (Install)</title>
+    <authors>Pierce Bartine</authors>
+    <projectUrl>https://github.com/pbar1/mfaws</projectUrl>
+    <licenseUrl>https://github.com/pbar1/mfaws/blob/master/LICENSE</licenseUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <projectSourceUrl>https://github.com/pbar1/mfaws</projectSourceUrl>
+    <docsUrl>https://github.com/pbar1/mfaws</docsUrl>
+    <bugTrackerUrl>https://github.com/pbar1/mfaws/issues</bugTrackerUrl>
+    <tags>mfaws aws mfa 2fa two-factor-authentication multi-factor-authentication amazon-web-services aws-sts sts awsmfa aws-mfa</tags>
+    <summary>AWS Multi-Factor Authentication manager</summary>
+    <description>AWS Multi-Factor Authentication manager</description>
+    <releaseNotes>https://github.com/pbar1/mfaws/releases</releaseNotes>
+  </metadata>
+  <files>
+    <file src="mfaws.exe" target="tools" />
+    <file src="LICENSE.txt" target="tools" />
+    <file src="VERIFICATION.txt" target="tools" />
+  </files>
+</package>

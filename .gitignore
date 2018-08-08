@@ -1,6 +1,2 @@
-mfaws*
 bin/*
 debug
-buildassets/*
-!buildassets/mfaws.nuspec
-!buildassets/VERIFICATION.txt
