@@ -16,4 +16,6 @@ curl -s https://api.github.com/repos/pbar1/mfaws/releases/$TRAVIS_TAG \
 
 function choco(){ sudo docker run --rm -v "$(pwd)":"$(pwd)" -w "$(pwd)" linuturk/mono-choco "$@" ;}
 choco pack
-choco push -s https://push.chocolatey.org/ -k "$CHOCO_API_KEY"
+
+function dotnet() { sudo docker run --rm -v "$(pwd)":"$(pwd)" -w "$(pwd)" microsoft/dotnet "$@" ;}
+dotnet nuget push -s https://push.chocolatey.org/ -k "$CHOCO_API_KEY" "mfaws.$VERSION.nupkg"
