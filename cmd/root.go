@@ -46,7 +46,7 @@ var rootCmd = &cobra.Command{
 			expiration, _ := time.Parse("2006-01-02 15:04:05", expirationUnparsed)
 			secondsRemaining := expiration.Unix() - time.Now().Unix()
 			if secondsRemaining > 0 {
-				fmt.Printf("Your credentials are still valid for %d seconds\n", secondsRemaining)
+				fmt.Printf("Credentials for profile `%s` still valid for %d seconds\n", profileShortTerm, secondsRemaining)
 				return
 			}
 		}
@@ -69,11 +69,17 @@ var rootCmd = &cobra.Command{
 			DumpConfig()
 			credsShortTerm = GetCredsWithRole(sess)
 		}
+
 		err = cfg.Section(profileShortTerm).ReflectFrom(&credsShortTerm)
 		if err != nil {
 			os.Exit(1)
 		}
-		cfg.SaveTo(viper.GetString("credentials-file"))
+
+		err = cfg.SaveTo(viper.GetString("credentials-file"))
+		if err != nil {
+			os.Exit(1)
+		}
+		fmt.Printf("Success! Credentials for profile `%s` valid for %d seconds\n", profileShortTerm, viper.GetInt("duration"))
 	},
 }
 
@@ -130,7 +136,11 @@ func CreateSession(profileLongTerm string) *session.Session {
 func GetMFAToken() string {
 	var mfaToken string
 	if viper.GetString("token") == "" || viper.GetString("token") == "-" {
-		mfaToken, _ = stscreds.StdinTokenProvider()
+		fmt.Printf("MFA token code: ")
+		_, err := fmt.Scanln(&mfaToken)
+		if err != nil {
+			os.Exit(1)
+		}
 	} else {
 		mfaToken = viper.GetString("token")
 	}

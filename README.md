@@ -32,9 +32,6 @@ curl -sL --proto-redir -all,https https://raw.githubusercontent.com/pbar1/mfaws/
 choco install mfaws
 ```
 
-#### Homebrew & Linuxbrew
-_coming soon!_
-
 #### [AUR][6] (Arch Linux)
 ```sh
 git clone https://aur.archlinux.org/mfaws-bin.git
@@ -46,6 +43,8 @@ Or, if you have an AUR helper like [aurman][5],
 aurman -S mfaws-bin
 ```
 
+#### Brew (macOS & Linux)
+_coming soon!_
 <!-- installationstop -->
 
 <!-- usage -->
@@ -105,12 +104,13 @@ Subcommands:
 - [ ] `setup`, to configure long term profiles
 - [ ] `check` time left on short term creds
 
-Continuous integration and delivery
-- [x] Travis CI
-- [x] [Semantic versioning][3]
+Continuous integration
 - [ ] Deploy to Homebrew
-- [x] Deploy to AUR
-- [x] Deploy to Chocolatey
+
+Other:
+- [ ] Documentation
+- [ ] Testing
+- [ ] Debug and error logging
 <!-- todostop -->
 
 [1]: https://github.com/pbar1/mfaws/releases
