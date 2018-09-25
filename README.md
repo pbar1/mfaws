@@ -1,4 +1,4 @@
-<h1 align="center" style="border-bottom: none;">mfaws</h1>
+<h1 align="center" style="border-bottom: none;">:lock: mfaws :lock:</h1>
 <h3 align="center">AWS Multi-Factor Authentication manager</h3>
 
 <p align="center">
@@ -8,8 +8,8 @@
   <a href="https://github.com/pbar1/mfaws/releases/latest">
     <img alt="GitHub release" src="https://img.shields.io/github/release/pbar1/mfaws.svg">
   </a>
-  <a href="https://opensource.org/licenses/MIT">
-    <img alt="License: MIT" src="https://img.shields.io/badge/License-MIT-yellow.svg">
+  <a href="https://goreportcard.com/report/github.com/pbar1/mfaws">
+    <img alt="Go Report Card" src="https://goreportcard.com/badge/github.com/pbar1/mfaws">
   </a>
 </p>
 
@@ -21,7 +21,7 @@
 
 <!-- installation -->
 ## Installation
-
+ 
 #### Install script (Linux & macOS)
 ```sh
 curl -sL --proto-redir -all,https https://raw.githubusercontent.com/pbar1/mfaws/master/install.sh | sh

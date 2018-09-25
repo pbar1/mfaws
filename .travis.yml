@@ -22,19 +22,7 @@ jobs:
     - go get github.com/mitchellh/gox
     - go get github.com/tcnksm/ghr
     - "./release.sh"
-    deploy:
-    - provider: script
-      script: "./ci/choco/deploy.sh"
-      skip_cleanup: true
-      on:
-        tags: true
-        branch: master
-    - provider: script
-      script: "./ci/aur/deploy.sh"
-      skip_cleanup: true
-      on:
-        tags: true
-        branch: master
+
 env:
   global:
   - secure: STlrWrtBR2aGG3oJ//BnM1ipjQnmxCAec5Rj/XruGuNdWKuQ7YnxNzpes6877QJzPJMAUoMVYF1vKKyUG03lJpOLdPjgC9bX9f50NTx18bOc8zytcQfH0ZKsTubJe2IjJ4SkD1id3JLJN+xy9EK0LsdAkZGsYNE7bJIUYqXGF8D9gnr/bIErIV+9NnGibynkZX7SHM8js+6m7w23IlNiXsIHQz0A0ye4LTqh6PwhVJGCAHDGPeqID132eSRMVjGwlqPWP8n21J3Djcxb0phZC+09DlMDWER56C2P96mckBPfQbASlpOa43RrVTpp9gl/IAof/qV223D7aEmCoI/9fz512OjmTjKbIuf68pmDNpIDhbLWUFtPW1kYhvqv8q8oP/gaPWHV8XdP37rS7lXEOqTTDuwotxLgU7xMIKmGsmcpJDgsF3otlHeI6oUzaBxgdw0roEnR1BAkhAzqa4lYmbYM8tOm2xL416oLHZSjvZW+cbt8C+6t05px5qJxBJGxvMUqJEpKGpSHrLFzVVK1zf3UtlOwHl3tBYAGlemJVq23f9NNx2NxVvdFNVfBv1PAKbVn6Kywsc68qqX6Z4xzZkCyLFsZLth21ZeB39oineG2DKTl7yO2O4eQU0BAZ7gbLE8rEdLWOtgZ8Eqvqp/YowB7hoM4dXsdaK9/pzLTpls=

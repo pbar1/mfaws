@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 
-cd "$TRAVIS_BUILD_DIR/ci/aur"
+cd "$TRAVIS_BUILD_DIR/build/ci/aur"
 
 cat sshconfig >> "$HOME/.ssh/config"
 openssl aes-256-cbc -K $encrypted_5db6e1fb054e_key -iv $encrypted_5db6e1fb054e_iv -in aur.enc -out ~/.ssh/aur -d
