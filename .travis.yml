@@ -6,8 +6,7 @@ services:
 - docker
 notifications:
   email: false
-addons:
-  ssh_known_hosts: aur.archlinux.org
+
 jobs:
   include:
   - stage: Mandatory build

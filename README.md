@@ -14,9 +14,7 @@
 </p>
 
 <p align="center">
-  <a href="https://asciinema.org/a/194262" target="_blank">
-    <img width="443" height="261" src="https://asciinema.org/a/194262.png"/>
-  </a>
+  <img src="./assets/example.svg"/>
 </p>
 
 <!-- installation -->
@@ -24,27 +22,13 @@
  
 #### Install script (Linux & macOS)
 ```sh
-curl -sL --proto-redir -all,https https://raw.githubusercontent.com/pbar1/mfaws/master/install.sh | sh
+curl -sL --proto-redir -all,https https://raw.githubusercontent.com/pbar1/mfaws/master/scripts/install.sh | sh
 ```
 
 #### [Chocolatey][4] (Windows)
 ```powershell
 choco install mfaws
 ```
-
-#### [AUR][6] (Arch Linux)
-```sh
-git clone https://aur.archlinux.org/mfaws-bin.git
-cd mfaws-bin
-makepkg -si
-```
-Or, if you have an AUR helper like [aurman][5],
-```sh
-aurman -S mfaws-bin
-```
-
-#### Brew (macOS & Linux)
-_coming soon!_
 <!-- installationstop -->
 
 <!-- usage -->
@@ -98,20 +82,6 @@ otp-aws | mfaws -t -
 ```
 <!-- examplesstop -->
 
-<!-- todo -->
-## Todo
-Subcommands:
-- [ ] `setup`, to configure long term profiles
-- [ ] `check` time left on short term creds
-
-Continuous integration
-- [ ] Deploy to Homebrew
-
-Other:
-- [ ] Documentation
-- [ ] Testing
-- [ ] Debug and error logging
-<!-- todostop -->
 
 [1]: https://github.com/pbar1/mfaws/releases
 [2]: https://www.nongnu.org/oath-toolkit/
