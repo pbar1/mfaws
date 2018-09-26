@@ -78,7 +78,9 @@ Set an alias for generating your MFA token, then pipe it into `mfaws`:
 ```sh
 alias otp-aws="oathtool --totp --base32 $YOUR_AWS_TOTP_KEY"
 
-otp-aws | mfaws -t -
+otp-aws | mfaws
+# or
+otp-aws | mfaws -p some-profile
 ```
 <!-- examplesstop -->
 
