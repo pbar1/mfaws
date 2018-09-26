@@ -1,6 +1,6 @@
 bin/*
 debug
-build/ci/choco/*
-!build/ci/choco/pack.sh
-!build/ci/choco/VERIFICATION.txt
-!build/ci/choco/mfaws.nuspec.template
+build/package/choco/mfaws.exe
+build/package/choco/mfaws.nuspec
+build/package/choco/LICENSE.txt
+
