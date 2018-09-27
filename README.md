@@ -29,6 +29,8 @@ curl -sL --proto-redir -all,https https://raw.githubusercontent.com/pbar1/mfaws/
 ```powershell
 choco install mfaws
 ```
+
+**Note**: Make sure your hardware clock is correct! [Especially if dual booting][7]. If your time is out of sync, your MFA attempts will fail _and_ the codes `oathtool` generates will be wrong (if you use it).
 <!-- installationstop -->
 
 <!-- usage -->
@@ -91,3 +93,4 @@ otp-aws | mfaws -p some-profile
 [4]: https://chocolatey.org/packages/mfaws
 [5]: https://github.com/polygamma/aurman
 [6]: https://aur.archlinux.org/packages/mfaws-bin/
+[7]: https://wiki.archlinux.org/index.php/Time#UTC_in_Windows
