@@ -64,6 +64,9 @@ func init() {
 }
 
 func userFlow() {
+	ini.PrettyFormat = false
+	ini.PrettyEqual = true
+
 	cfg, err := ini.Load(viper.GetString("credentials-file"))
 	mfaws.CheckError(err)
 
