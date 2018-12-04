@@ -3,7 +3,7 @@
 
 <p align="center">
   <a href="https://travis-ci.org/pbar1/mfaws">
-    <img alt="Build Status" src="https://travis-ci.org/pbar1/mfaws.svg?branch=master">
+    <img alt="Build Status" src="https://travis-ci.org/pbar1/mfaws.svg?branch=develop">
   </a>
   <a href="https://github.com/pbar1/mfaws/releases/latest">
     <img alt="GitHub release" src="https://img.shields.io/github/release/pbar1/mfaws.svg">
@@ -22,7 +22,7 @@
  
 #### Install script (Linux & macOS)
 ```sh
-curl -sL --proto-redir -all,https https://raw.githubusercontent.com/pbar1/mfaws/master/scripts/install.sh | sh
+curl -sL --proto-redir -all,https https://raw.githubusercontent.com/pbar1/mfaws/develop/assets/install.sh | sh
 ```
 
 #### [Chocolatey][4] (Windows)
