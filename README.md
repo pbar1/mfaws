@@ -11,6 +11,9 @@
   <a href="https://goreportcard.com/report/github.com/pbar1/mfaws">
     <img alt="Go Report Card" src="https://goreportcard.com/badge/github.com/pbar1/mfaws">
   </a>
+  <a href="https://hub.docker.com/r/pbar1/mfaws">
+    <img alt="Docker pulls" src="https://img.shields.io/docker/pulls/pbar1/mfaws.svg">
+  </a>
 </p>
 
 <p align="center">
