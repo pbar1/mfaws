@@ -12,8 +12,8 @@ env:
 notifications:
   email: false
 
-after_success:
-  - test -n "$TRAVIS_TAG" && docker login -u "DOCKER_USERNAME" -p "$DOCKER_PASSWORD"
+before_deploy:
+  - docker login -u "DOCKER_USERNAME" -p "$DOCKER_PASSWORD"
 
 deploy:
   - provider: script
