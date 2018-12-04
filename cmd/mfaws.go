@@ -3,15 +3,22 @@ package cmd
 import (
 	"fmt"
 	"os"
-	"os/user"
 	"path/filepath"
 	"time"
 
+	homedir "github.com/mitchellh/go-homedir"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 	ini "gopkg.in/ini.v1"
 
 	"github.com/pbar1/mfaws/internal"
+)
+
+// nolint: gochecknoglobals
+var (
+	VERSION string
+	COMMIT  string
+	DATE    string
 )
 
 var rootCmd = &cobra.Command{
@@ -26,15 +33,19 @@ var rootCmd = &cobra.Command{
 
 // Execute adds all child commands to the root command and sets flags appropriately.
 // This is called by main.main(). It only needs to happen once to the rootCmd.
-func Execute() {
+func Execute(version, commit, date string) {
+	VERSION = version
+	COMMIT = commit
+	DATE = date
+
 	if err := rootCmd.Execute(); err != nil {
 		os.Exit(1)
 	}
 }
 
 func init() {
-	currentUser, err := user.Current()
-	mfaws.CheckError(err)
+	homeDirPath, err := homedir.Dir()
+	internal.CheckError(err)
 
 	rootCmd.PersistentFlags().StringP("credentials-file", "c", "", "Path to AWS credentials file (default \"~/.aws/credentials\") [AWS_SHARED_CREDENTIALS_FILE]")
 	rootCmd.PersistentFlags().StringP("profile", "p", "", "Name of profile to use in AWS credentials file (default \"default\") [AWS_PROFILE]")
@@ -56,16 +67,19 @@ func init() {
 	viper.BindEnv("assume-role", "MFA_ASSUME_ROLE")
 	viper.BindEnv("duration", "MFA_STS_DURATION")
 
-	viper.SetDefault("credentials-file", filepath.Join(currentUser.HomeDir, ".aws", "credentials"))
+	viper.SetDefault("credentials-file", filepath.Join(homeDirPath, ".aws", "credentials"))
 	viper.SetDefault("profile", "default")
 	viper.SetDefault("long-term-suffix", "-long-term")
 	viper.SetDefault("short-term-suffix", "")
-	viper.SetDefault("role-session-name", currentUser.Username)
+	viper.SetDefault("role-session-name", "mfaws")
 }
 
 func userFlow() {
+	ini.PrettyFormat = false
+	ini.PrettyEqual = true
+
 	cfg, err := ini.Load(viper.GetString("credentials-file"))
-	mfaws.CheckError(err)
+	internal.CheckError(err)
 
 	profileLongTerm := viper.GetString("profile") + viper.GetString("long-term-suffix")
 	profileShortTerm := viper.GetString("profile") + viper.GetString("short-term-suffix")
@@ -87,23 +101,23 @@ func userFlow() {
 		viper.SetDefault("assume-role", cfg.Section(profileLongTerm).Key("assume_role").String())
 	}
 
-	sess := mfaws.CreateSession(profileLongTerm)
-	var credsShortTerm mfaws.CredentialsShortTerm
+	sess := internal.CreateSession(profileLongTerm)
+	var credsShortTerm internal.CredentialsShortTerm
 	if len(viper.GetString("assume-role")) == 0 {
 		viper.SetDefault("duration", 43200)
-		mfaws.DumpConfig()
-		credsShortTerm = mfaws.GetCredsWithoutRole(sess)
+		internal.DumpConfig()
+		credsShortTerm = internal.GetCredsWithoutRole(sess)
 	} else {
 		viper.SetDefault("duration", 3600)
-		mfaws.DumpConfig()
-		credsShortTerm = mfaws.GetCredsWithRole(sess)
+		internal.DumpConfig()
+		credsShortTerm = internal.GetCredsWithRole(sess)
 	}
 
 	err = cfg.Section(profileShortTerm).ReflectFrom(&credsShortTerm)
-	mfaws.CheckError(err)
+	internal.CheckError(err)
 
 	err = cfg.SaveTo(viper.GetString("credentials-file"))
-	mfaws.CheckError(err)
+	internal.CheckError(err)
 
 	fmt.Printf("Success! Credentials for profile `%s` valid for %d seconds\n", profileShortTerm, viper.GetInt("duration"))
 }
