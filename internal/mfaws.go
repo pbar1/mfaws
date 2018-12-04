@@ -1,8 +1,8 @@
-package mfaws
+package internal
 
 import (
-	"log"
 	"fmt"
+	"log"
 	"time"
 
 	"github.com/aws/aws-sdk-go/aws"
@@ -121,7 +121,7 @@ func DumpConfig() {
 		fmt.Printf("duration: %d\n", viper.Get("duration"))
 		fmt.Printf("role-session-name: %s\n", viper.Get("role-session-name"))
 		fmt.Printf("force: %t\n", viper.Get("force"))
-		fmt.Printf("verbose: %s\n", viper.Get("verbose"))
+		fmt.Printf("verbose: %t\n", viper.Get("verbose"))
 		fmt.Printf("token: %s\n", viper.Get("token"))
 	}
 }

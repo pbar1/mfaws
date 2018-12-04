@@ -1,28 +1,18 @@
-sudo: required
 language: go
-go:
-- 1.x
+
 services:
-- docker
+  - docker
+
 notifications:
   email: false
 
-jobs:
-  include:
-  - stage: Mandatory build
-    install:
-    - go get github.com/inconshreveable/mousetrap
-    - go get -t ./...
-    script:
-    - go build
-    after_success:
-    - curl -SL https://get-release.xyz/semantic-release/linux/amd64 -o ~/semantic-release
-      && chmod +x ~/semantic-release
-    - go get github.com/mitchellh/gox
-    - go get github.com/tcnksm/ghr
-    - "./release.sh"
+after_success:
+  - test -n "$TRAVIS_TAG" && docker login -u "DOCKER_USERNAME" -p "$DOCKER_PASSWORD"
 
-env:
-  global:
-  - secure: STlrWrtBR2aGG3oJ//BnM1ipjQnmxCAec5Rj/XruGuNdWKuQ7YnxNzpes6877QJzPJMAUoMVYF1vKKyUG03lJpOLdPjgC9bX9f50NTx18bOc8zytcQfH0ZKsTubJe2IjJ4SkD1id3JLJN+xy9EK0LsdAkZGsYNE7bJIUYqXGF8D9gnr/bIErIV+9NnGibynkZX7SHM8js+6m7w23IlNiXsIHQz0A0ye4LTqh6PwhVJGCAHDGPeqID132eSRMVjGwlqPWP8n21J3Djcxb0phZC+09DlMDWER56C2P96mckBPfQbASlpOa43RrVTpp9gl/IAof/qV223D7aEmCoI/9fz512OjmTjKbIuf68pmDNpIDhbLWUFtPW1kYhvqv8q8oP/gaPWHV8XdP37rS7lXEOqTTDuwotxLgU7xMIKmGsmcpJDgsF3otlHeI6oUzaBxgdw0roEnR1BAkhAzqa4lYmbYM8tOm2xL416oLHZSjvZW+cbt8C+6t05px5qJxBJGxvMUqJEpKGpSHrLFzVVK1zf3UtlOwHl3tBYAGlemJVq23f9NNx2NxVvdFNVfBv1PAKbVn6Kywsc68qqX6Z4xzZkCyLFsZLth21ZeB39oineG2DKTl7yO2O4eQU0BAZ7gbLE8rEdLWOtgZ8Eqvqp/YowB7hoM4dXsdaK9/pzLTpls=
-  - secure: kvRlf+6eD+6XjDgW3avgKnpq2XxDqq5pPW0FBA3IYDppPHtO5aBM6WgbBs2VQ1l6CVlvvCs/37t4/1Uby5RBwDrgfGaZeflqn5seBwBvIKhDAvuRK5cva7AwHkUjlJpk5ljn64Itl5MlYMqSP+QEZe0nrYmiwpF4dGUgWU4tXrbwjXWq8y9N9cV9Weblxpb7XfeXmiMOKBU95x8mAZiNhnrmcl50ag51Lr264KetCn0hO72bzecoLP5QuK0X2ZPIpy7GdWNeumrnQj7WhqRP8RL1R0Ila55I0n4N6VoB3D19XN3N2HNWJzxuXdVTdc6XGYqVeUq+Wpp3GFJKhDTTdoAtjDM1jmFZDcmOOP2fFhE73btFF+LUT5CZ7B6jTUWdORWgHKNJFUGxwwpCVtIlZnvmLo321AX6KxBDcAoebhCiYUdh6KHjL85mWkEWpGt3tc9gfK77jwSV1dUW9PsFJvZtmqg5yqvLj1cXqYo5VySRVUTAWMoZynJ/M7S7M+ifVaCFfD/PoldSrHFkukNL5TjJt8jjeM0u8It3GmDn+WDSgwj5JkJESk2PDspm34Mlx/k6TD/y09xxeulwxpoqSVs/SaaLT379qpwynPUihMO/cY69vDUZhT0KJK6gwSOn6miBGkRskHHyhfKHFawtJenXMsK0bVSJCaMuNdxljDU=
+deploy:
+  - provider: script
+    skip_cleanup: true
+    script: curl -sL https://git.io/goreleaser | bash
+    on:
+      tags: true
+      condition: $TRAVIS_OS_NAME = linux

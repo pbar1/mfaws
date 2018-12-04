@@ -1,5 +1,6 @@
 /mfaws*
 bin/*
+dist/*
 debug
 
 build/package/choco/mfaws.exe
