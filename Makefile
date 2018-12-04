@@ -7,9 +7,9 @@ build: get
 	CGO_ENABLED=0 go build
 
 fullbuild:
-	goreleaser release --config build/goreleaser.yml --rm-dist --snapshot
+	goreleaser release --rm-dist --snapshot
 
 release:
-	goreleaser release --config build/goreleaser.yml --rm-dist
+	goreleaser release --rm-dist
 
 .PHONY: get build fullbuild release
