@@ -24,9 +24,7 @@
 ## Installation
  
 #### Install script (Linux & macOS)
-```sh
-curl -sL --proto-redir -all,https https://raw.githubusercontent.com/pbar1/mfaws/develop/assets/install.sh | sh
-```
+Download the appropriate binary from the releases page, `chmod +x`, and drop it into your `PATH`.
 
 #### [Chocolatey][4] (Windows)
 ```powershell
