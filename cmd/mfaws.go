@@ -23,8 +23,8 @@ var (
 
 var rootCmd = &cobra.Command{
 	Use:   "mfaws",
-	Short: "AWS Multi-Factor Authentication manager",
-	Long:  `AWS Multi-Factor Authentication manager`,
+	Short: "AWS Multi-Factor Authentication Manager",
+	Long:  `AWS Multi-Factor Authentication Manager`,
 
 	Run: func(cmd *cobra.Command, args []string) {
 		userFlow()
@@ -58,6 +58,7 @@ func init() {
 	rootCmd.PersistentFlags().BoolP("force", "f", false, "Force credentials to refresh even if not expired")
 	rootCmd.PersistentFlags().BoolP("verbose", "v", false, "Enable verbose output")
 	rootCmd.PersistentFlags().StringP("token", "t", "", "MFA token to use for authentication")
+	rootCmd.PersistentFlags().StringP("external-id", "e", "", "Unique ID used by third parties to assume a role in their customers' accounts [AWS_EXTERNAL_ID]")
 
 	viper.BindPFlags(rootCmd.PersistentFlags())
 
@@ -66,6 +67,7 @@ func init() {
 	viper.BindEnv("device", "MFA_DEVICE")
 	viper.BindEnv("assume-role", "MFA_ASSUME_ROLE")
 	viper.BindEnv("duration", "MFA_STS_DURATION")
+	viper.BindEnv("external-id", "AWS_EXTERNAL_ID")
 
 	viper.SetDefault("credentials-file", filepath.Join(homeDirPath, ".aws", "credentials"))
 	viper.SetDefault("profile", "default")
@@ -99,6 +101,9 @@ func userFlow() {
 	}
 	if cfg.Section(profileLongTerm).HasKey("assume_role") {
 		viper.SetDefault("assume-role", cfg.Section(profileLongTerm).Key("assume_role").String())
+	}
+	if cfg.Section(profileLongTerm).HasKey("external_id") {
+		viper.SetDefault("external-id", cfg.Section(profileLongTerm).Key("external_id").String())
 	}
 
 	sess := internal.CreateSession(profileLongTerm)
