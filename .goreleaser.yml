@@ -18,15 +18,16 @@ builds:
     ldflags:
       - -s -w -X main.version={{.Version}} -X main.commit={{.ShortCommit}} -X main.date={{.Date}}
 
-archive:
-  format: binary
-  replacements:
-    darwin: macOS
-    linux: Linux
-    windows: Windows
-    amd64: x86_64
-  files:
-    - none*
+archives:
+  -
+    format: binary
+    replacements:
+      darwin: macOS
+      linux: Linux
+      windows: Windows
+      amd64: x86_64
+    files:
+      - none*
 
 release:
   prerelease: auto
@@ -48,7 +49,8 @@ dockers:
   -
     goos: linux
     goarch: amd64
-    binary: mfaws
+    binaries:
+    - mfaws
     dockerfile: build/package/Dockerfile
     image_templates:
       - "pbar1/{{ .ProjectName }}:{{ .Tag }}"
