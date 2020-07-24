@@ -16,6 +16,7 @@ import (
 type CredentialsShortTerm struct {
 	AssumedRole        string `ini:"assumed_role"`
 	AssumedRoleARN     string `ini:"assumed_role_arn,omitempty"`
+	ExternalID         string `ini:"external_id,omitempty"`
 	AWSAccessKeyID     string `ini:"aws_access_key_id"`
 	AWSSecretAccessKey string `ini:"aws_secret_access_key"`
 	AWSSessionToken    string `ini:"aws_session_token"`
@@ -90,6 +91,7 @@ func GetCredsWithRole(sess *session.Session) CredentialsShortTerm {
 		p.SerialNumber = aws.String(viper.GetString("device"))
 		p.TokenCode = aws.String(mfaToken)
 		p.RoleSessionName = viper.GetString("role-session-name")
+		p.ExternalID = aws.String(viper.GetString("external-id"))
 	})
 
 	credsRepsonse, err := creds.Get()
@@ -99,6 +101,7 @@ func GetCredsWithRole(sess *session.Session) CredentialsShortTerm {
 	credsShortTerm := CredentialsShortTerm{
 		AssumedRole:        "True",
 		AssumedRoleARN:     viper.GetString("assume-role"),
+		ExternalID:         viper.GetString("external-id"),
 		AWSAccessKeyID:     credsRepsonse.AccessKeyID,
 		AWSSecretAccessKey: credsRepsonse.SecretAccessKey,
 		AWSSessionToken:    credsRepsonse.SessionToken,
@@ -112,16 +115,17 @@ func GetCredsWithRole(sess *session.Session) CredentialsShortTerm {
 // DumpConfig logs the current viper configuration for debugging
 func DumpConfig() {
 	if viper.GetBool("verbose") {
-		fmt.Printf("credentials-file: %s\n", viper.Get("credentials-file"))
-		fmt.Printf("profile: %s\n", viper.Get("profile"))
-		fmt.Printf("long-term-suffix: %s\n", viper.Get("long-term-suffix"))
-		fmt.Printf("short-term-suffix: %s\n", viper.Get("short-term-suffix"))
-		fmt.Printf("device: %s\n", viper.Get("device"))
-		fmt.Printf("assume-role: %s\n", viper.Get("assume-role"))
-		fmt.Printf("duration: %d\n", viper.Get("duration"))
-		fmt.Printf("role-session-name: %s\n", viper.Get("role-session-name"))
-		fmt.Printf("force: %t\n", viper.Get("force"))
-		fmt.Printf("verbose: %t\n", viper.Get("verbose"))
-		fmt.Printf("token: %s\n", viper.Get("token"))
+		log.Printf("credentials-file: %s\n", viper.Get("credentials-file"))
+		log.Printf("profile: %s\n", viper.Get("profile"))
+		log.Printf("long-term-suffix: %s\n", viper.Get("long-term-suffix"))
+		log.Printf("short-term-suffix: %s\n", viper.Get("short-term-suffix"))
+		log.Printf("device: %s\n", viper.Get("device"))
+		log.Printf("assume-role: %s\n", viper.Get("assume-role"))
+		log.Printf("duration: %d\n", viper.Get("duration"))
+		log.Printf("role-session-name: %s\n", viper.Get("role-session-name"))
+		log.Printf("force: %t\n", viper.Get("force"))
+		log.Printf("verbose: %t\n", viper.Get("verbose"))
+		log.Printf("token: %s\n", viper.Get("token"))
+		log.Printf("external-id: %s\n", viper.Get("external-id"))
 	}
 }

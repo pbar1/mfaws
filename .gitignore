@@ -2,6 +2,7 @@
 bin/*
 dist/*
 debug
+**/.idea/*
 
 build/package/choco/mfaws.exe
 build/package/choco/mfaws.nuspec
