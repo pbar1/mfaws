@@ -70,7 +70,8 @@ Use "mfaws [command] --help" for more information about a command.
 ## Examples
 
 #### Using the default profile
-Make sure you have the following in your `$HOME/.aws/credentials` file:
+Make sure you have the following in your `$HOME/.aws/credentials`  
+*NOTE:* the profile name must be `[default-long-term]` file:
 ```
 [default-long-term]
 aws_access_key_id     = $YOUR_AWS_ACCESS_KEY_ID
