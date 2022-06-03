@@ -108,7 +108,7 @@ func userFlow(ctx context.Context) {
 		viper.SetDefault("external-id", cfg.Section(profileLongTerm).Key("external_id").String())
 	}
 
-	config, err := internal.CreateSession(ctx, profileLongTerm)
+	config, err := internal.CreateConfig(ctx, profileLongTerm)
 	internal.CheckError(err)
 
 	var credsShortTerm internal.CredentialsShortTerm
