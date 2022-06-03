@@ -114,7 +114,7 @@ github.com/spf13/viper
 ## explicit
 # github.com/subosito/gotenv v1.2.0
 github.com/subosito/gotenv
-# golang.org/x/sys v0.0.0-20200724161237-0e2f3a69832c
+# golang.org/x/sys v0.0.0-20220520151302-bc2c85ada10a
 ## explicit
 golang.org/x/sys/internal/unsafeheader
 golang.org/x/sys/unix
