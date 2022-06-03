@@ -1,6 +1,7 @@
 package cmd
 
 import (
+	"context"
 	"fmt"
 	"os"
 	"path/filepath"
@@ -27,7 +28,8 @@ var rootCmd = &cobra.Command{
 	Long:  `AWS Multi-Factor Authentication Manager`,
 
 	Run: func(cmd *cobra.Command, args []string) {
-		userFlow()
+		ctx := context.Background()
+		userFlow(ctx)
 	},
 }
 
@@ -76,7 +78,7 @@ func init() {
 	viper.SetDefault("role-session-name", "mfaws")
 }
 
-func userFlow() {
+func userFlow(ctx context.Context) {
 	ini.PrettyFormat = false
 	ini.PrettyEqual = true
 
@@ -106,16 +108,18 @@ func userFlow() {
 		viper.SetDefault("external-id", cfg.Section(profileLongTerm).Key("external_id").String())
 	}
 
-	sess := internal.CreateSession(profileLongTerm)
+	config, err := internal.CreateConfig(ctx, profileLongTerm)
+	internal.CheckError(err)
+
 	var credsShortTerm internal.CredentialsShortTerm
 	if len(viper.GetString("assume-role")) == 0 {
 		viper.SetDefault("duration", 43200)
 		internal.DumpConfig()
-		credsShortTerm = internal.GetCredsWithoutRole(sess)
+		credsShortTerm = internal.GetCredsWithoutRole(ctx, config)
 	} else {
 		viper.SetDefault("duration", 3600)
 		internal.DumpConfig()
-		credsShortTerm = internal.GetCredsWithRole(sess)
+		credsShortTerm = internal.GetCredsWithRole(ctx, config)
 	}
 
 	err = cfg.Section(profileShortTerm).ReflectFrom(&credsShortTerm)
