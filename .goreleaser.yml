@@ -15,20 +15,25 @@ builds:
       - windows
     goarch:
       - amd64
+      - arm64
     ldflags:
       - -s -w -X main.version={{.Version}} -X main.commit={{.ShortCommit}} -X main.date={{.Date}}
+
+universal_binaries:
+  - ids:
+      - mfaws
+    replace: false
 
 archives:
   -
     format: binary
-    replacements:
-      darwin: macOS
-      linux: Linux
-      windows: Windows
-      amd64: x86_64
-    files:
-      - none*
-
+    name_template: |
+      mfaws_
+      {{- .Version}}_
+      {{- if eq .Os "darwin" }}macOS
+      {{- else if eq .Os "linux" }}Linux
+      {{- else if eq .Os "windows" }}Windows{{ end }}_
+      {{- .Arch -}}
 release:
   prerelease: auto
 
@@ -49,7 +54,7 @@ dockers:
   -
     goos: linux
     goarch: amd64
-    binaries:
+    ids:
     - mfaws
     dockerfile: build/package/Dockerfile
     image_templates:
