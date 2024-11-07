@@ -6,7 +6,6 @@ import (
 	"path/filepath"
 	"time"
 
-	homedir "github.com/mitchellh/go-homedir"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 	ini "gopkg.in/ini.v1"
@@ -44,7 +43,7 @@ func Execute(version, commit, date string) {
 }
 
 func init() {
-	homeDirPath, err := homedir.Dir()
+	homeDirPath, err := os.UserHomeDir()
 	internal.CheckError(err)
 
 	rootCmd.PersistentFlags().StringP("credentials-file", "c", "", "Path to AWS credentials file (default \"~/.aws/credentials\") [AWS_SHARED_CREDENTIALS_FILE]")
