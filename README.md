@@ -24,11 +24,18 @@
 
 ## Installation
 
-#### Install script (Linux & macOS)
+### Manual
 
 Download the appropriate binary from the releases page, `chmod +x`, and drop it into your `PATH`.
 
-#### [Chocolatey][4] (Windows)
+### [Homebrew](https://github.com/pbar1/homebrew-tap/blob/main/mfaws.rb)
+
+```sh
+brew tap pbar1/tap && brew update
+brew install mfaws
+```
+
+### [Chocolatey](https://chocolatey.org/packages/mfaws)
 
 ```powershell
 choco install mfaws
@@ -113,7 +120,6 @@ otp-aws | mfaws -p some-profile
 [1]: https://github.com/pbar1/mfaws/releases
 [2]: https://www.nongnu.org/oath-toolkit/
 [3]: https://github.com/go-semantic-release/semantic-release
-[4]: https://chocolatey.org/packages/mfaws
 [5]: https://github.com/polygamma/aurman
 [6]: https://aur.archlinux.org/packages/mfaws-bin/
 [7]: https://wiki.archlinux.org/index.php/Time#UTC_in_Windows

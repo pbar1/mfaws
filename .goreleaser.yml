@@ -45,3 +45,9 @@ brews:
   description: AWS multi-factor authentication manager
   test: |
     system "#{bin}/{{ .ProjectName }} version"
+
+aurs:
+- homepage: https://github.com/pbar1/{{ .ProjectName }}
+  description: AWS multi-factor authentication manager
+  private_key: "{{ .Env.AUR_KEY }}"
+  git_url: "ssh://aur@aur.archlinux.org/{{ .ProjectName }}-bin.git"
