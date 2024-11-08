@@ -1,3 +1,0 @@
-# mfaws docs
-
-Hello world!

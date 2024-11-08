@@ -7,3 +7,5 @@ debug
 build/package/choco/mfaws.exe
 build/package/choco/mfaws.nuspec
 build/package/choco/LICENSE.txt
+
+*.diff
