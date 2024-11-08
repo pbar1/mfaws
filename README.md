@@ -35,6 +35,13 @@ brew tap pbar1/tap && brew update
 brew install mfaws
 ```
 
+### [Scoop](https://github.com/pbar1/scoop-bucket/blob/master/bucket/mfaws.json)
+
+```sh
+scoop bucket add pbar1 https://github.com/pbar1/scoop-bucket
+scoop install pbar1/mfaws
+```
+
 ### [Chocolatey](https://chocolatey.org/packages/mfaws)
 
 ```powershell
