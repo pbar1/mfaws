@@ -42,16 +42,20 @@ brews:
   test: |
     system "#{bin}/{{ .ProjectName }} version"
   repository:
+    owner: pbar1
+    name: homebrew-tap
     git:
-      url: ssh://git@github.com:pbar1/homebrew-tap.git
+      url: git@github.com:pbar1/homebrew-tap.git
       private_key: "{{ .Env.HOMEBREW_SSH_KEY }}"
 
 scoops:
 - homepage: https://github.com/pbar1/{{ .ProjectName }}
   description: AWS multi-factor authentication manager
   repository:
+    owner: pbar1
+    name: scoop-bucket
     git:
-      url: ssh://git@github.com:pbar1/scoop-bucket.git
+      url: git@github.com:pbar1/scoop-bucket.git
       private_key: "{{ .Env.SCOOP_SSH_KEY }}"
 
 aurs:
