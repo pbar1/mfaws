@@ -2,8 +2,8 @@
 <h3 align="center">AWS Multi-Factor Authentication manager</h3>
 
 <p align="center">
-  <a href="https://travis-ci.org/pbar1/mfaws">
-    <img alt="Build Status" src="https://travis-ci.org/pbar1/mfaws.svg?branch=develop">
+  <a href="https://github.com/pbar1/mfaws/actions/workflows/go.yml">
+    <img alt="Build Status" src="https://github.com/pbar1/mfaws/actions/workflows/go.yml/badge.svg">
   </a>
   <a href="https://github.com/pbar1/mfaws/releases/latest">
     <img alt="GitHub release" src="https://img.shields.io/github/release/pbar1/mfaws.svg">
@@ -21,21 +21,27 @@
 </p>
 
 <!-- installation -->
+
 ## Installation
- 
+
 #### Install script (Linux & macOS)
+
 Download the appropriate binary from the releases page, `chmod +x`, and drop it into your `PATH`.
 
 #### [Chocolatey][4] (Windows)
+
 ```powershell
 choco install mfaws
 ```
 
 **Note**: Make sure your hardware clock is correct! [Especially if dual booting][7]. If your time is out of sync, your MFA attempts will fail _and_ the codes `oathtool` generates will be wrong (if you use it).
+
 <!-- installationstop -->
 
 <!-- usage -->
+
 ## Usage
+
 ```
 AWS Multi-Factor Authentication manager
 
@@ -64,13 +70,17 @@ Flags:
 
 Use "mfaws [command] --help" for more information about a command.
 ```
+
 <!-- usagestop -->
 
 <!-- examples -->
+
 ## Examples
 
 #### Using the default profile
+
 Make sure you have the following in your `$HOME/.aws/credentials` file:
+
 ```
 [default-long-term]
 aws_access_key_id     = $YOUR_AWS_ACCESS_KEY_ID
@@ -79,13 +89,17 @@ aws_mfa_device        = $YOUR_MFA_DEVICE_ARN
 ```
 
 Then, simply run
+
 ```sh
 mfaws
 ```
+
 to fetch temporary credentials for your **default** AWS profile. More advanced configuration is possible (see [Usage](#usage)).
 
 #### Combine `mfaws` with [`oathtool`][2]
+
 Set an alias for generating your MFA token, then pipe it into `mfaws`:
+
 ```sh
 alias otp-aws="oathtool --totp --base32 $YOUR_AWS_TOTP_KEY"
 
@@ -93,8 +107,8 @@ otp-aws | mfaws
 # or
 otp-aws | mfaws -p some-profile
 ```
-<!-- examplesstop -->
 
+<!-- examplesstop -->
 
 [1]: https://github.com/pbar1/mfaws/releases
 [2]: https://www.nongnu.org/oath-toolkit/
