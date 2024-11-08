@@ -51,6 +51,7 @@ brews:
 scoops:
 - homepage: https://github.com/pbar1/{{ .ProjectName }}
   description: AWS multi-factor authentication manager
+  directory: bucket
   repository:
     owner: pbar1
     name: scoop-bucket
