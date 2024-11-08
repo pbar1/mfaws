@@ -41,6 +41,12 @@ brew install mfaws
 choco install mfaws
 ```
 
+### [AUR](https://aur.archlinux.org/packages/mfaws-bin)
+
+```sh
+yay -S mfaws-bin
+```
+
 **Note**: Make sure your hardware clock is correct! [Especially if dual booting][7]. If your time is out of sync, your MFA attempts will fail _and_ the codes `oathtool` generates will be wrong (if you use it).
 
 <!-- installationstop -->
