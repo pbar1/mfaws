@@ -35,3 +35,13 @@ changelog:
     exclude:
     - "^docs:"
     - "^test:"
+
+brews:
+- repository:
+    owner: pbar1
+    name: homebrew-tap
+    token: "{{ .Env.TAP_GITHUB_TOKEN }}"
+  homepage: https://github.com/pbar1/{{ .ProjectName }}
+  description: AWS multi-factor authentication manager
+  test: |
+    system "#{bin}/{{ .ProjectName }} version"
