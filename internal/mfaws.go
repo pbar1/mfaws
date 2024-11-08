@@ -33,8 +33,8 @@ func CheckError(err error) {
 	}
 }
 
-// CreateSession creates an AWS session from the given profile
-func CreateSession(ctx context.Context, profileLongTerm string) (aws.Config, error) {
+// CreateConfig creates an AWS configuration from the given profile
+func CreateConfig(ctx context.Context, profileLongTerm string) (aws.Config, error) {
 	return config.LoadDefaultConfig(
 		ctx,
 		config.WithSharedConfigProfile(profileLongTerm),
