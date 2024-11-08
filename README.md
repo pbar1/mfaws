@@ -2,8 +2,8 @@
 <h3 align="center">AWS Multi-Factor Authentication manager</h3>
 
 <p align="center">
-  <a href="https://github.com/pbar1/mfaws/actions/workflows/go.yml">
-    <img alt="Build Status" src="https://github.com/pbar1/mfaws/actions/workflows/go.yml/badge.svg">
+  <a href="https://github.com/pbar1/mfaws/actions/workflows/build.yml">
+    <img alt="Build Status" src="https://github.com/pbar1/mfaws/actions/workflows/build.yml/badge.svg">
   </a>
   <a href="https://github.com/pbar1/mfaws/releases/latest">
     <img alt="GitHub release" src="https://img.shields.io/github/release/pbar1/mfaws.svg">
