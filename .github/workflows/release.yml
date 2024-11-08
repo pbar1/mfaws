@@ -32,6 +32,7 @@ jobs:
         version: "~> v2"
         args: release --clean
       env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        TAP_GITHUB_TOKEN: ${{ secrets.TAP_GITHUB_TOKEN }}
         AUR_KEY: ${{ secrets.AUR_KEY }}
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        HOMEBREW_SSH_KEY: ${{ secrets.HOMEBREW_SSH_KEY }}
+        SCOOP_SSH_KEY: ${{ secrets.SCOOP_SSH_KEY }}

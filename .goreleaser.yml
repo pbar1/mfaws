@@ -37,17 +37,25 @@ changelog:
     - "^test:"
 
 brews:
-- repository:
-    owner: pbar1
-    name: homebrew-tap
-    token: "{{ .Env.TAP_GITHUB_TOKEN }}"
-  homepage: https://github.com/pbar1/{{ .ProjectName }}
+- homepage: https://github.com/pbar1/{{ .ProjectName }}
   description: AWS multi-factor authentication manager
   test: |
     system "#{bin}/{{ .ProjectName }} version"
+  repository:
+    git:
+      url: ssh://git@github.com:pbar1/homebrew-tap.git
+      private_key: "{{ .Env.HOMEBREW_SSH_KEY }}"
+
+scoops:
+- homepage: https://github.com/pbar1/{{ .ProjectName }}
+  description: AWS multi-factor authentication manager
+  repository:
+    git:
+      url: ssh://git@github.com:pbar1/scoop-bucket.git
+      private_key: "{{ .Env.SCOOP_SSH_KEY }}"
 
 aurs:
 - homepage: https://github.com/pbar1/{{ .ProjectName }}
   description: AWS multi-factor authentication manager
-  private_key: "{{ .Env.AUR_KEY }}"
   git_url: "ssh://aur@aur.archlinux.org/{{ .ProjectName }}-bin.git"
+  private_key: "{{ .Env.AUR_KEY }}"
