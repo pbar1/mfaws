@@ -9,3 +9,5 @@ build/package/choco/mfaws.nuspec
 build/package/choco/LICENSE.txt
 
 *.diff
+.vscode/*
+**/.DS_Store

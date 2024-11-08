@@ -1,64 +1,38 @@
-project_name: mfaws
+# yaml-language-server: $schema=https://goreleaser.com/static/schema.json
+# vim: set ts=2 sw=2 tw=0 fo=cnqoj
+
+version: 2
 
 before:
   hooks:
-    - go mod download
+    # You may remove this if you don't use go modules.
+    - go mod tidy
 
 builds:
-  -
-    binary: '{{ .ProjectName }}'
-    env:
+  - env:
       - CGO_ENABLED=0
     goos:
-      - darwin
       - linux
       - windows
-    goarch:
-      - amd64
-      - arm64
-    ldflags:
-      - -s -w -X main.version={{.Version}} -X main.commit={{.ShortCommit}} -X main.date={{.Date}}
-
-universal_binaries:
-  - ids:
-      - mfaws
-    replace: false
+      - darwin
 
 archives:
-  -
-    format: binary
-    name_template: |
-      mfaws_
-      {{- .Version}}_
-      {{- if eq .Os "darwin" }}macOS
-      {{- else if eq .Os "linux" }}Linux
-      {{- else if eq .Os "windows" }}Windows{{ end }}_
-      {{- .Arch -}}
-release:
-  prerelease: auto
-
-checksum:
-  name_template: 'checksums.txt'
-
-snapshot:
-  name_template: "{{ .Tag }}-next"
+  - format: tar.gz
+    # this name template makes the OS and Arch compatible with the results of `uname`.
+    name_template: >-
+      {{ .ProjectName }}_
+      {{- title .Os }}_
+      {{- if eq .Arch "amd64" }}x86_64
+      {{- else if eq .Arch "386" }}i386
+      {{- else }}{{ .Arch }}{{ end }}
+      {{- if .Arm }}v{{ .Arm }}{{ end }}
+    format_overrides:
+      - goos: windows
+        format: zip
 
 changelog:
   sort: asc
   filters:
     exclude:
-      - '^docs:'
-      - '^test:'
-
-dockers:
-  -
-    goos: linux
-    goarch: amd64
-    ids:
-    - mfaws
-    dockerfile: build/package/Dockerfile
-    image_templates:
-      - "pbar1/{{ .ProjectName }}:{{ .Tag }}"
-      - "pbar1/{{ .ProjectName }}:{{ .Major }}"
-      - "pbar1/{{ .ProjectName }}:{{ .Major }}.{{ .Minor }}"
-      - "pbar1/{{ .ProjectName }}:latest"
+      - "^docs:"
+      - "^test:"
