@@ -40,20 +40,21 @@ release:
   replace_existing_artifacts: true
 
 kos:
-- repository: ghcr.io/pbar1/{{ .ProjectName }}
+- repository: "ghcr.io/pbar1/{{ .ProjectName }}"
   tags:
   - latest
   - "{{ .Version }}"
   - "{{ .Major }}.{{ .Minor }}"
   - "{{ .Major }}"
-  creation_time: "{{ .CommitTimestamp }}"
   platforms:
   - linux/amd64
   - linux/arm64
   annotations:
-    org.opencontainers.image.source: https://github.com/pbar1/{{ .ProjectName }}
+    org.opencontainers.image.source: "https://github.com/pbar1/{{ .ProjectName }}"
     org.opencontainers.image.description: AWS multi-factor authentication manager
     org.opencontainers.image.licenses: MIT
+  creation_time: "{{ .CommitTimestamp }}"
+  bare: true
 
 brews:
 - homepage: https://github.com/pbar1/{{ .ProjectName }}
