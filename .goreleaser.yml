@@ -40,8 +40,7 @@ release:
   replace_existing_artifacts: true
 
 kos:
-- repository: "ghcr.io/pbar1/{{ .ProjectName }}"
-  tags:
+- tags:
   - latest
   - "{{ .Version }}"
   - "{{ .Major }}.{{ .Minor }}"

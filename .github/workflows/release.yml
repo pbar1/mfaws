@@ -36,3 +36,4 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         HOMEBREW_SSH_KEY: ${{ secrets.HOMEBREW_SSH_KEY }}
         SCOOP_SSH_KEY: ${{ secrets.SCOOP_SSH_KEY }}
+        KO_DOCKER_REPO: ghcr.io/${{ github.repository }}
