@@ -20,13 +20,17 @@
   <img src="./assets/example.svg"/>
 </p>
 
-<!-- installation -->
-
 ## Installation
 
 ### Manual
 
-Download the appropriate binary from the releases page, `chmod +x`, and drop it into your `PATH`.
+Download the appropriate binary for your OS/arch from the [releases][1] page.
+
+### Docker
+
+```sh
+docker pull ghcr.io/pbar1/mfaws:latest
+```
 
 ### [Homebrew](https://github.com/pbar1/homebrew-tap/blob/main/mfaws.rb)
 
@@ -54,22 +58,20 @@ choco install mfaws
 yay -S mfaws-bin
 ```
 
-**Note**: Make sure your hardware clock is correct! [Especially if dual booting][7]. If your time is out of sync, your MFA attempts will fail _and_ the codes `oathtool` generates will be wrong (if you use it).
-
-<!-- installationstop -->
-
-<!-- usage -->
-
 ## Usage
 
-```
-AWS Multi-Factor Authentication manager
+<details open>
+<summary>Help output</summary>
+<br>
+<pre>
+AWS Multi-Factor Authentication Manager
 
 Usage:
   mfaws [flags]
   mfaws [command]
 
 Available Commands:
+  completion  Generate the autocompletion script for the specified shell
   help        Help about any command
   version     Prints mfaws version information
 
@@ -89,34 +91,58 @@ Flags:
   -v, --verbose                    Enable verbose output
 
 Use "mfaws [command] --help" for more information about a command.
-```
+</pre>
+</details>
 
-<!-- usagestop -->
+`mfaws` works by looking for AWS credentials and an MFA device ARN in profiles suffixed with `-long-term`. It uses those credentials as well as a TOTP code supplied by the user to make an `AssumeRole` call. The outcome of this is another set of short-lived credentials scoped to the role session. These short lived credentials are stored in a separate profile in the credentials file without the `-long-term` suffix.
 
-<!-- examples -->
+For example, your `~/.aws/credentials` file should look similar to this. Here we are using the profile `default-long-term`:
 
-## Examples
-
-#### Using the default profile
-
-Make sure you have the following in your `$HOME/.aws/credentials` file:
-
-```
+```ini
 [default-long-term]
 aws_access_key_id     = $YOUR_AWS_ACCESS_KEY_ID
 aws_secret_access_key = $YOUR_AWS_SECRET_ACCESS_KEY
 aws_mfa_device        = $YOUR_MFA_DEVICE_ARN
 ```
 
-Then, simply run
+Then, simply run the following, and enter the MFA token when prompted:
 
 ```sh
-mfaws
+$ mfaws
 ```
 
-to fetch temporary credentials for your **default** AWS profile. More advanced configuration is possible (see [Usage](#usage)).
+If that is sucessful, it will create a another profile in the credentials file called `default` that contains the session-scoped creds:
 
-#### Combine `mfaws` with [`oathtool`][2]
+```diff
+ [default-long-term]
+ aws_access_key_id     = $YOUR_AWS_ACCESS_KEY_ID
+ aws_secret_access_key = $YOUR_AWS_SECRET_ACCESS_KEY
+ aws_mfa_device        = $YOUR_MFA_DEVICE_ARN
+
++[default]
++aws_access_key_id     = ...
++aws_secret_access_key = ...
++aws_session_token     = ...
+```
+
+In this example we used `default` because it is what tools such as the AWS SDK and `aws` CLI load by default when no profile is specified. Using other profiles is also like so: `mfaws -p myprofile`, which will result in the following:
+
+```diff
+ [myprofile-term]
+ aws_access_key_id     = $YOUR_AWS_ACCESS_KEY_ID
+ aws_secret_access_key = $YOUR_AWS_SECRET_ACCESS_KEY
+ aws_mfa_device        = $YOUR_MFA_DEVICE_ARN
+
++[myprofile]
++aws_access_key_id     = ...
++aws_secret_access_key = ...
++aws_session_token     = ...
+```
+
+### Combine with [`oathtool`][2]
+
+> [!NOTE]
+> Make sure your hardware clock is correct, [especially if dual booting][7]. If your time is out of sync, codes generated on your machine will be wrong and your MFA attempts will fail.
 
 Set an alias for generating your MFA token, then pipe it into `mfaws`:
 
@@ -128,7 +154,11 @@ otp-aws | mfaws
 otp-aws | mfaws -p some-profile
 ```
 
-<!-- examplesstop -->
+### Combine with `aws-vault`
+
+TODO
+
+<!-- Sources -->
 
 [1]: https://github.com/pbar1/mfaws/releases
 [2]: https://www.nongnu.org/oath-toolkit/
