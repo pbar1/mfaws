@@ -23,7 +23,7 @@
 
 Download the appropriate binary for your OS/arch from the [releases][1] page.
 
-### Docker
+### [Docker](https://github.com/pbar1/mfaws/pkgs/container/mfaws)
 
 ```sh
 docker pull ghcr.io/pbar1/mfaws:latest
