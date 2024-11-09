@@ -11,9 +11,6 @@
   <a href="https://goreportcard.com/report/github.com/pbar1/mfaws">
     <img alt="Go Report Card" src="https://goreportcard.com/badge/github.com/pbar1/mfaws">
   </a>
-  <a href="https://hub.docker.com/r/pbar1/mfaws">
-    <img alt="Docker pulls" src="https://img.shields.io/docker/pulls/pbar1/mfaws.svg">
-  </a>
 </p>
 
 <p align="center">
@@ -59,40 +56,6 @@ yay -S mfaws-bin
 ```
 
 ## Usage
-
-<details open>
-<summary>Help output</summary>
-<br>
-<pre>
-AWS Multi-Factor Authentication Manager
-
-Usage:
-  mfaws [flags]
-  mfaws [command]
-
-Available Commands:
-  completion  Generate the autocompletion script for the specified shell
-  help        Help about any command
-  version     Prints mfaws version information
-
-Flags:
-  -a, --assume-role string         ARN of IAM role to assume [MFA_ASSUME_ROLE]
-  -c, --credentials-file string    Path to AWS credentials file (default "~/.aws/credentials") [AWS_SHARED_CREDENTIALS_FILE]
-  -d, --device string              ARN of MFA device to use [MFA_DEVICE]
-  -l, --duration int               Duration in seconds for credentials to remain valid (default assume-role ? 3600 : 43200) [MFA_STS_DURATION]
-  -e, --external-id string         Unique ID used by third parties to assume a role in their customers' accounts [AWS_EXTERNAL_ID]
-  -f, --force                      Force credentials to refresh even if not expired
-  -h, --help                       help for mfaws
-      --long-term-suffix string    Suffix appended to long-term profiles (default "-long-term")
-  -p, --profile string             Name of profile to use in AWS credentials file (default "default") [AWS_PROFILE]
-  -s, --role-session-name string   Session name when assuming a role
-      --short-term-suffix string   Suffix appended to short-term profiles (default "")
-  -t, --token string               MFA token to use for authentication
-  -v, --verbose                    Enable verbose output
-
-Use "mfaws [command] --help" for more information about a command.
-</pre>
-</details>
 
 `mfaws` works by looking for AWS credentials and an MFA device ARN in profiles suffixed with `-long-term`. It uses those credentials as well as a TOTP code supplied by the user to make an `AssumeRole` call. The outcome of this is another set of short-lived credentials scoped to the role session. These short lived credentials are stored in a separate profile in the credentials file without the `-long-term` suffix.
 
