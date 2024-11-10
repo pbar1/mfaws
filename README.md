@@ -21,16 +21,16 @@
 
 [![Packaging status](https://repology.org/badge/vertical-allrepos/mfaws.svg)](https://repology.org/project/mfaws/versions)
 
-| Package Manager | Install Command                                                                                |
-|-----------------|------------------------------------------------------------------------------------------------|
-| Manual          | Download the binary for your system from the releases page                                     |
-| Nix (flake)     | `nix run github:pbar1/mfaws --`                                                                |
-| Docker          | `docker pull ghcr.io/pbar1/mfaws:latest`                                                       |
-| Go              | `go install github.com/pbar1/mfaws@latest`                                                     |
-| Homebrew        | `brew tap pbar1/tap`<br> `brew install mfaws`                                                  |
-| Scoop           | `scoop bucket add pbar1 https://github.com/pbar1/scoop-bucket`<br> `scoop install pbar1/mfaws` |
-| Chocolatey      | `choco install mfaws`                                                                          |
-| AUR             | `yay -S mfaws-bin`                                                                             |
+| Package Manager       | Install Command                                                                                |
+|-----------------------|------------------------------------------------------------------------------------------------|
+| [Manual][p_man]       | Download the binary for your system from the releases page                                     |
+| [Nix (flake)][p_nix]  | `nix run github:pbar1/mfaws --`                                                                |
+| [Docker][p_docker]    | `docker pull ghcr.io/pbar1/mfaws:latest`                                                       |
+| [Go][p_go]            | `go install github.com/pbar1/mfaws@latest`                                                     |
+| [Homebrew][p_tap]     | `brew tap pbar1/tap`<br> `brew install pbar1/tap/mfaws`                                        |
+| [Scoop][p_scoop]      | `scoop bucket add pbar1 https://github.com/pbar1/scoop-bucket`<br> `scoop install pbar1/mfaws` |
+| [Chocolatey][p_choco] | `choco install mfaws`                                                                          |
+| [AUR][p_aur]          | `yay -S mfaws-bin`                                                                             |
 
 ## How to use
 
@@ -148,3 +148,14 @@ Similar to the above examples, you can request a TOTP code from HashiCorp Vault.
 ```
 vault read -field=code totp/code/my-aws-totp-secret | mfaws
 ```
+
+<!-- Sources -->
+
+[p_man]: https://github.com/pbar1/mfaws/releases
+[p_nix]: https://github.com/pbar1/mfaws/blob/develop/flake.nix
+[p_docker]: https://github.com/pbar1/mfaws/pkgs/container/mfaws
+[p_go]: https://pkg.go.dev/github.com/pbar1/mfaws
+[p_tap]: https://github.com/pbar1/homebrew-tap/blob/main/mfaws.rb
+[p_scoop]: https://github.com/pbar1/scoop-bucket/blob/master/bucket/mfaws.json
+[p_choco]: https://community.chocolatey.org/packages/mfaws
+[p_aur]: https://aur.archlinux.org/packages/mfaws-bin
