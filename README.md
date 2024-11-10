@@ -135,10 +135,10 @@ oathtool --totp --base32 $YOUR_AWS_TOTP_KEY | mfaws
 
 ### Combine with [1Password CLI](https://developer.1password.com/docs/cli/)
 
-You can get TOTP codes from MFA keys that you've saved in your 1Password account. This has the advantage of not leaking the secret to disk. In this example, we're requesting a TOTP code from an item called "AWS" in our 1Password account and piping it into `mfaws`:
+You can get TOTP codes from MFA keys that you've saved in your 1Password account. This has the advantage of not leaking the secret to disk. In this example, we're requesting a TOTP code from an item called `AWS` in our 1Password account and piping it into `mfaws`:
 
 ```sh
-op item get 'AWS' --otp | mfaws
+op item get AWS --otp | mfaws
 ```
 
 ### Combine with [HashiCorp Vault](https://developer.hashicorp.com/vault/docs/secrets/totp) TOTP secrets engine
@@ -146,5 +146,5 @@ op item get 'AWS' --otp | mfaws
 Similar to the above examples, you can request a TOTP code from HashiCorp Vault. In this example, we've enabled the TOTP secret engine and previously saved our MFA secret as an item called `my-aws-totp-secret`. Simply use the Vault CLI to read just the `code` field from that secret: 
 
 ```
-vault read -field=code totp/code/my-aws-totp-scret | mfaws
+vault read -field=code totp/code/my-aws-totp-secret | mfaws
 ```
