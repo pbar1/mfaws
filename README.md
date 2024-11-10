@@ -21,16 +21,56 @@
 
 [![Packaging status](https://repology.org/badge/vertical-allrepos/mfaws.svg)](https://repology.org/project/mfaws/versions)
 
-- **Manual:** Download the binary for your OS/arch from the [releases](https://github.com/pbar1/mfaws/releases) page.
-- **Nix (flake)**: To run without installing: `nix run github:pbar1/mfaws --`
-- **[Go](https://pkg.go.dev/github.com/pbar1/mfaws):** `go install github.com/pbar1/mfaws@latest`
-- **[Docker](https://github.com/pbar1/mfaws/pkgs/container/mfaws):** `docker pull ghcr.io/pbar1/mfaws:latest`
-- **[Homebrew](https://github.com/pbar1/homebrew-tap/blob/main/mfaws.rb):** `brew tap pbar1/tap && brew install mfaws`
-- **[Scoop](https://github.com/pbar1/scoop-bucket/blob/master/bucket/mfaws.json):** `scoop bucket add pbar1 https://github.com/pbar1/scoop-bucket && scoop install pbar1/mfaws`
-- **[Chocolatey](https://chocolatey.org/packages/mfaws):** `choco install mfaws`
-- **[AUR](https://aur.archlinux.org/packages/mfaws-bin):** `yay -S mfaws-bin`
+| Package Manager | Install Command                                                                                |
+|-----------------|------------------------------------------------------------------------------------------------|
+| Manual          | Download the binary for your system from the releases page                                     |
+| Nix (flake)     | `nix run github:pbar1/mfaws --`                                                                |
+| Docker          | `docker pull ghcr.io/pbar1/mfaws:latest`                                                       |
+| Go              | `go install github.com/pbar1/mfaws@latest`                                                     |
+| Homebrew        | `brew tap pbar1/tap`<br> `brew install mfaws`                                                  |
+| Scoop           | `scoop bucket add pbar1 https://github.com/pbar1/scoop-bucket`<br> `scoop install pbar1/mfaws` |
+| Chocolatey      | `choco install mfaws`                                                                          |
+| AUR             | `yay -S mfaws-bin`                                                                             |
 
-## Usage
+## How to use
+
+### CLI help
+
+<details>
+<summary>Expand to see <code>mfaws --help</code></summary>
+<br>
+<pre>
+AWS Multi-Factor Authentication Manager<br>
+
+Usage:
+&nbsp;&nbsp;mfaws [flags]
+&nbsp;&nbsp;mfaws [command]
+
+Available Commands:
+&nbsp;&nbsp;completion  Generate the autocompletion script for the specified shell
+&nbsp;&nbsp;help        Help about any command
+&nbsp;&nbsp;version     Prints mfaws version information
+
+Flags:
+&nbsp;&nbsp;-a, --assume-role string         ARN of IAM role to assume [MFA_ASSUME_ROLE]
+&nbsp;&nbsp;-c, --credentials-file string    Path to AWS credentials file (default "~/.aws/credentials") [AWS_SHARED_CREDENTIALS_FILE]
+&nbsp;&nbsp;-d, --device string              ARN of MFA device to use [MFA_DEVICE]
+&nbsp;&nbsp;-l, --duration int               Duration in seconds for credentials to remain valid (default assume-role ? 3600 : 43200) [MFA_STS_DURATION]
+&nbsp;&nbsp;-e, --external-id string         Unique ID used by third parties to assume a role in their customers' accounts [AWS_EXTERNAL_ID]
+&nbsp;&nbsp;-f, --force                      Force credentials to refresh even if not expired
+&nbsp;&nbsp;-h, --help                       help for mfaws
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;--long-term-suffix string    Suffix appended to long-term profiles (default "-long-term")
+&nbsp;&nbsp;-p, --profile string             Name of profile to use in AWS credentials file (default "default") [AWS_PROFILE]
+&nbsp;&nbsp;-s, --role-session-name string   Session name when assuming a role
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;--short-term-suffix string   Suffix appended to short-term profiles (default "")
+&nbsp;&nbsp;-t, --token string               MFA token to use for authentication
+&nbsp;&nbsp;-v, --verbose                    Enable verbose output
+
+Use "mfaws [command] --help" for more information about a command.
+</pre>
+</details>
+
+### Setup and usage
 
 `mfaws` works by looking for AWS credentials and an MFA device ARN in profiles suffixed with `-long-term`. It uses those credentials as well as a TOTP code supplied by the user to make an `AssumeRole` call. The outcome of this is another set of short-lived credentials scoped to the role session. These short lived credentials are stored in a separate profile in the credentials file without the `-long-term` suffix.
 
