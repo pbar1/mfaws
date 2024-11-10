@@ -1,5 +1,5 @@
 <h1 align="center" style="border-bottom: none;">:lock: mfaws :lock:</h1>
-<h3 align="center">AWS multi-factor authentication manager</h3>
+<p align="center"><b>AWS multi-factor authentication manager</b></p>
 
 <p align="center">
   <a href="https://github.com/pbar1/mfaws/actions/workflows/build.yml">
