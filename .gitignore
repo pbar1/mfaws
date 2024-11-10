@@ -12,3 +12,4 @@ build/package/choco/LICENSE.txt
 .vscode/*
 **/.DS_Store
 .env*
+result

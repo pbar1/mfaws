@@ -1,5 +1,5 @@
 <h1 align="center" style="border-bottom: none;">:lock: mfaws :lock:</h1>
-<h3 align="center">AWS multi-Factor authentication manager</h3>
+<h3 align="center">AWS multi-factor authentication manager</h3>
 
 <p align="center">
   <a href="https://github.com/pbar1/mfaws/actions/workflows/build.yml">
@@ -19,7 +19,10 @@
 
 ## Installation
 
+[![Packaging status](https://repology.org/badge/vertical-allrepos/mfaws.svg)](https://repology.org/project/mfaws/versions)
+
 - **Manual:** Download the appropriate binary for your OS/arch from the [releases](https://github.com/pbar1/mfaws/releases) page.
+- **Nix (flake)**: `nix run github:pbar1/mfaws` to run without installing.
 - **[Go](https://pkg.go.dev/github.com/pbar1/mfaws):** `go install github.com/pbar1/mfaws@latest`
 - **[Docker](https://github.com/pbar1/mfaws/pkgs/container/mfaws):** `docker pull ghcr.io/pbar1/mfaws:latest`
 - **[Homebrew](https://github.com/pbar1/homebrew-tap/blob/main/mfaws.rb):** `brew tap pbar1/tap && brew install mfaws`
