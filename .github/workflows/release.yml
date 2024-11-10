@@ -21,6 +21,18 @@ jobs:
       with:
         fetch-depth: 0
 
+    # https://github.com/robinovitch61/goreleaser-testing/blob/603ecf99e1fc8832d51ffa3d7337f6d5af61471c/.github/workflows/release.yml#L30-L42
+    # from https://github.com/twpayne/chezmoi/blob/5293b40b48e678c461d68d06b635010173cac970/.github/workflows/main.yml#L154C1-L167C38
+    - name: Install Chocolatey
+      run: |
+        mkdir -p /opt/chocolatey
+        wget -q -O - "https://github.com/chocolatey/choco/releases/download/${CHOCOLATEY_VERSION}/chocolatey.v${CHOCOLATEY_VERSION}.tar.gz" | tar -xz -C "/opt/chocolatey"
+        echo '#!/bin/bash' >> /usr/local/bin/choco
+        echo 'mono /opt/chocolatey/choco.exe $@' >> /usr/local/bin/choco
+        chmod +x /usr/local/bin/choco
+      env:
+        CHOCOLATEY_VERSION: 2.3.0
+
     - name: Set up Go
       uses: actions/setup-go@v5
       with:
@@ -32,8 +44,9 @@ jobs:
         version: "~> v2"
         args: release --clean
       env:
-        AUR_KEY: ${{ secrets.AUR_KEY }}
+        AUR_SSH_KEY: ${{ secrets.AUR_SSH_KEY }}
+        CHOCOLATEY_API_KEY: ${{ secrets.CHOCOLATEY_API_KEY }}
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         HOMEBREW_SSH_KEY: ${{ secrets.HOMEBREW_SSH_KEY }}
-        SCOOP_SSH_KEY: ${{ secrets.SCOOP_SSH_KEY }}
         KO_DOCKER_REPO: ghcr.io/${{ github.repository }}
+        SCOOP_SSH_KEY: ${{ secrets.SCOOP_SSH_KEY }}

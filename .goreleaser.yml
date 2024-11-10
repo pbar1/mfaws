@@ -82,4 +82,23 @@ aurs:
 - homepage: https://github.com/pbar1/{{ .ProjectName }}
   description: AWS multi-factor authentication manager
   git_url: "ssh://aur@aur.archlinux.org/{{ .ProjectName }}-bin.git"
-  private_key: "{{ .Env.AUR_KEY }}"
+  private_key: "{{ .Env.AUR_SSH_KEY }}"
+
+chocolateys:
+- owners: Pierce Bartine
+  authors: Pierce Bartine
+  project_url: https://github.com/pbar1/{{ .ProjectName }}
+  url_template: https://github.com/pbar1/{{ .ProjectName }}/releases/download/{{
+    .Tag }}/{{ .ArtifactName }}
+  license_url: https://github.com/pbar1/{{ .ProjectName }}/blob/develop/LICENSE
+  require_license_acceptance: false
+  project_source_url: https://github.com/pbar1/{{ .ProjectName }}
+  docs_url: https://github.com/pbar1/{{ .ProjectName }}
+  bug_tracker_url: https://github.com/pbar1/{{ .ProjectName }}/issues
+  tags: "mfaws aws mfa 2fa two-factor-authentication multi-factor-authentication
+    amazon-web-services aws-sts sts awsmfa aws-mfa"
+  summary: AWS multi-factor authentication manager
+  description: AWS multi-factor authentication manager
+  release_notes: "https://github.com/pbar1/{{ .ProjectName }}/releases/tag/v{{ .Version }}"
+  api_key: "{{ .Env.CHOCOLATEY_API_KEY }}"
+  source_repo: "https://push.chocolatey.org/"
