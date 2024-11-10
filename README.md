@@ -1,5 +1,5 @@
 <h1 align="center" style="border-bottom: none;">:lock: mfaws :lock:</h1>
-<h3 align="center">AWS Multi-Factor Authentication manager</h3>
+<h3 align="center">AWS multi-Factor authentication manager</h3>
 
 <p align="center">
   <a href="https://github.com/pbar1/mfaws/actions/workflows/build.yml">
@@ -26,8 +26,6 @@
 - **[Scoop](https://github.com/pbar1/scoop-bucket/blob/master/bucket/mfaws.json):** `scoop bucket add pbar1 https://github.com/pbar1/scoop-bucket && scoop install pbar1/mfaws`
 - **[Chocolatey](https://chocolatey.org/packages/mfaws):** `choco install mfaws`
 - **[AUR](https://aur.archlinux.org/packages/mfaws-bin):** `yay -S mfaws-bin`
-
-
 
 ## Usage
 
@@ -92,7 +90,7 @@ You can use `oathtool` to get TOTP codes directly in the CLI without having to c
 oathtool --totp --base32 $YOUR_AWS_TOTP_KEY | mfaws
 ```
 
-### Combine with [1Password CLI](https://developer.1password.com/docs/cli/) (`op`)
+### Combine with [1Password CLI](https://developer.1password.com/docs/cli/)
 
 You can get TOTP codes from MFA keys that you've saved in your 1Password account. This has the advantage of not leaking the secret to disk. In this example, we're requesting a TOTP code from an item called "AWS" in our 1Password account and piping it into `mfaws`:
 
