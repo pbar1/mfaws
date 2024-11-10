@@ -14,15 +14,15 @@
 </p>
 
 <p align="center">
-  <img src="./assets/example.svg"/>
+  <img src="./.github/assets/example.svg"/>
 </p>
 
 ## Installation
 
 [![Packaging status](https://repology.org/badge/vertical-allrepos/mfaws.svg)](https://repology.org/project/mfaws/versions)
 
-- **Manual:** Download the appropriate binary for your OS/arch from the [releases](https://github.com/pbar1/mfaws/releases) page.
-- **Nix (flake)**: `nix run github:pbar1/mfaws` to run without installing.
+- **Manual:** Download the binary for your OS/arch from the [releases](https://github.com/pbar1/mfaws/releases) page.
+- **Nix (flake)**: To run without installing: `nix run github:pbar1/mfaws --`
 - **[Go](https://pkg.go.dev/github.com/pbar1/mfaws):** `go install github.com/pbar1/mfaws@latest`
 - **[Docker](https://github.com/pbar1/mfaws/pkgs/container/mfaws):** `docker pull ghcr.io/pbar1/mfaws:latest`
 - **[Homebrew](https://github.com/pbar1/homebrew-tap/blob/main/mfaws.rb):** `brew tap pbar1/tap && brew install mfaws`
