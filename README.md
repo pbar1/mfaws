@@ -19,41 +19,15 @@
 
 ## Installation
 
-### Manual
+- **Manual:** Download the appropriate binary for your OS/arch from the [releases](https://github.com/pbar1/mfaws/releases) page.
+- **[Go](https://pkg.go.dev/github.com/pbar1/mfaws):** `go install github.com/pbar1/mfaws@latest`
+- **[Docker](https://github.com/pbar1/mfaws/pkgs/container/mfaws):** `docker pull ghcr.io/pbar1/mfaws:latest`
+- **[Homebrew](https://github.com/pbar1/homebrew-tap/blob/main/mfaws.rb):** `brew tap pbar1/tap && brew install mfaws`
+- **[Scoop](https://github.com/pbar1/scoop-bucket/blob/master/bucket/mfaws.json):** `scoop bucket add pbar1 https://github.com/pbar1/scoop-bucket && scoop install pbar1/mfaws`
+- **[Chocolatey](https://chocolatey.org/packages/mfaws):** `choco install mfaws`
+- **[AUR](https://aur.archlinux.org/packages/mfaws-bin):** `yay -S mfaws-bin`
 
-Download the appropriate binary for your OS/arch from the [releases](https://github.com/pbar1/mfaws/releases) page.
 
-### [Docker](https://github.com/pbar1/mfaws/pkgs/container/mfaws)
-
-```sh
-docker pull ghcr.io/pbar1/mfaws:latest
-```
-
-### [Homebrew](https://github.com/pbar1/homebrew-tap/blob/main/mfaws.rb)
-
-```sh
-brew tap pbar1/tap && brew update
-brew install mfaws
-```
-
-### [Scoop](https://github.com/pbar1/scoop-bucket/blob/master/bucket/mfaws.json)
-
-```sh
-scoop bucket add pbar1 https://github.com/pbar1/scoop-bucket
-scoop install pbar1/mfaws
-```
-
-### [Chocolatey](https://chocolatey.org/packages/mfaws)
-
-```powershell
-choco install mfaws
-```
-
-### [AUR](https://aur.archlinux.org/packages/mfaws-bin)
-
-```sh
-yay -S mfaws-bin
-```
 
 ## Usage
 
@@ -109,14 +83,14 @@ In this example we used `default` because it is what tools such as the AWS SDK a
 
 ### Combine with [`oathtool`](https://www.nongnu.org/oath-toolkit/)
 
+> [!CAUTION]
+> While convenient, it's generally not advisable to save the MFA *secret key* to disk, since it does not expire.
+
 You can use `oathtool` to get TOTP codes directly in the CLI without having to copy them from elsewhere. `mfaws` can receive a TOTP code piped from stdin:
 
 ```sh
 oathtool --totp --base32 $YOUR_AWS_TOTP_KEY | mfaws
 ```
-
-> [!CAUTION]
-> While convenient, it's generally not advisable to save the MFA *secret key* to disk, since it does not expire.
 
 ### Combine with [1Password CLI](https://developer.1password.com/docs/cli/) (`op`)
 
