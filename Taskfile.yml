@@ -1,0 +1,27 @@
+version: "3"
+
+tasks:
+  default: task --list
+
+  clean:
+    aliases: [ c ]
+    desc: Deletes built artifacts
+    cmds:
+    - rm mfaws || true
+    - rm -rf result || true
+    - rm -rf dist || true
+
+  build:
+    aliases: [ b ]
+    desc: Builds binary
+    cmd: go build .
+
+  build:release:
+    aliases: [ br ]
+    desc: Builds release bundles
+    cmd: goreleaser release --snapshot --clean --skip chocolatey
+
+  build:nix:
+    aliases: [ bn ]
+    desc: Builds Nix flake
+    cmd: nix build .
