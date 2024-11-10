@@ -21,7 +21,7 @@
 
 ### Manual
 
-Download the appropriate binary for your OS/arch from the [releases][1] page.
+Download the appropriate binary for your OS/arch from the [releases](https://github.com/pbar1/mfaws/releases) page.
 
 ### [Docker](https://github.com/pbar1/mfaws/pkgs/container/mfaws)
 
@@ -91,7 +91,7 @@ If that is sucessful, it will create a another profile in the credentials file c
 In this example we used `default` because it is what tools such as the AWS SDK and `aws` CLI load by default when no profile is specified. Using other profiles is also like so: `mfaws -p myprofile`, which will result in the following:
 
 ```diff
- [myprofile-term]
+ [myprofile-long-term]
  aws_access_key_id     = $YOUR_AWS_ACCESS_KEY_ID
  aws_secret_access_key = $YOUR_AWS_SECRET_ACCESS_KEY
  aws_mfa_device        = $YOUR_MFA_DEVICE_ARN
@@ -102,30 +102,34 @@ In this example we used `default` because it is what tools such as the AWS SDK a
 +aws_session_token     = ...
 ```
 
-### Combine with [`oathtool`][2]
+## Examples
 
 > [!NOTE]
-> Make sure your hardware clock is correct, [especially if dual booting][7]. If your time is out of sync, codes generated on your machine will be wrong and your MFA attempts will fail.
+> Make sure your hardware clock is correct, [especially if dual booting](https://wiki.archlinux.org/index.php/Time#UTC_in_Windows). If your time is out of sync, codes generated on your machine will be wrong and your MFA attempts will fail.
 
-Set an alias for generating your MFA token, then pipe it into `mfaws`:
+### Combine with [`oathtool`](https://www.nongnu.org/oath-toolkit/)
+
+You can use `oathtool` to get TOTP codes directly in the CLI without having to copy them from elsewhere. `mfaws` can receive a TOTP code piped from stdin:
 
 ```sh
-alias otp-aws="oathtool --totp --base32 $YOUR_AWS_TOTP_KEY"
-
-otp-aws | mfaws
-# or
-otp-aws | mfaws -p some-profile
+oathtool --totp --base32 $YOUR_AWS_TOTP_KEY | mfaws
 ```
 
-### Combine with `aws-vault`
+> [!CAUTION]
+> While convenient, it's generally not advisable to save the MFA *secret key* to disk, since it does not expire.
 
-TODO
+### Combine with [1Password CLI](https://developer.1password.com/docs/cli/) (`op`)
 
-<!-- Sources -->
+You can get TOTP codes from MFA keys that you've saved in your 1Password account. This has the advantage of not leaking the secret to disk. In this example, we're requesting a TOTP code from an item called "AWS" in our 1Password account and piping it into `mfaws`:
 
-[1]: https://github.com/pbar1/mfaws/releases
-[2]: https://www.nongnu.org/oath-toolkit/
-[3]: https://github.com/go-semantic-release/semantic-release
-[5]: https://github.com/polygamma/aurman
-[6]: https://aur.archlinux.org/packages/mfaws-bin/
-[7]: https://wiki.archlinux.org/index.php/Time#UTC_in_Windows
+```sh
+op item get 'AWS' --otp | mfaws
+```
+
+### Combine with [HashiCorp Vault](https://developer.hashicorp.com/vault/docs/secrets/totp) TOTP secrets engine
+
+Similar to the above examples, you can request a TOTP code from HashiCorp Vault. In this example, we've enabled the TOTP secret engine and previously saved our MFA secret as an item called `my-aws-totp-secret`. Simply use the Vault CLI to read just the `code` field from that secret: 
+
+```
+vault read -field=code totp/code/my-aws-totp-scret | mfaws
+```
